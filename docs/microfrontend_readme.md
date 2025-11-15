@@ -167,3 +167,17 @@ A abordagem adotada entrega:
 - Isolamento seguro entre frontends
 - Total alinhamento com boas práticas de microfrontends modernos
 
+---
+
+## 🔗 Repositórios do Projeto
+
+Todos os componentes estão disponíveis em repositórios GitHub separados:
+
+- **Root Config**: [cortex-bank-root-config](https://github.com/Grupo-10-Pos-FIAP/cortex-bank-root-config)
+- **Navigation Drawer**: [cortex-bank-navigation-drawer](https://github.com/Grupo-10-Pos-FIAP/cortex-bank-navigation-drawer)
+- **Dashboard**: [cortex-bank-dashboard](https://github.com/Grupo-10-Pos-FIAP/cortex-bank-dashboard)
+- **Transactions**: [cortex-bank-transactions](https://github.com/Grupo-10-Pos-FIAP/cortex-bank-transactions)
+- **Statement**: [cortex-bank-statement](https://github.com/Grupo-10-Pos-FIAP/cortex-bank-statement)
+- **Backend**: [cortex-bank-backend](https://github.com/Grupo-10-Pos-FIAP/cortex-bank-backend)
+- **Design System**: [Design-System](https://github.com/Grupo-10-Pos-FIAP/Design-System)
+

@@ -20,14 +20,15 @@ Cada módulo possui sua própria imagem, volume de `node_modules` e diretório s
 
 ## Repositórios dos Microfrontends
 
-> **Insira aqui as URLs dos repositórios GitHub de cada microfrontend**
->
-> - Navigation Drawer: `...`
-> - Dashboard: `...`
-> - Transactions: `...`
-> - Bank Statement: `...`
-> - Root Config: `...`
-> - Backend: `...`
+Todos os componentes do projeto estão disponíveis em repositórios GitHub separados:
+
+- **Root Config**: [cortex-bank-root-config](https://github.com/Grupo-10-Pos-FIAP/cortex-bank-root-config)
+- **Navigation Drawer**: [cortex-bank-navigation-drawer](https://github.com/Grupo-10-Pos-FIAP/cortex-bank-navigation-drawer)
+- **Dashboard**: [cortex-bank-dashboard](https://github.com/Grupo-10-Pos-FIAP/cortex-bank-dashboard)
+- **Transactions**: [cortex-bank-transactions](https://github.com/Grupo-10-Pos-FIAP/cortex-bank-transactions)
+- **Bank Statement**: [cortex-bank-statement](https://github.com/Grupo-10-Pos-FIAP/cortex-bank-statement)
+- **Backend**: [cortex-bank-backend](https://github.com/Grupo-10-Pos-FIAP/cortex-bank-backend)
+- **Design System**: [Design-System](https://github.com/Grupo-10-Pos-FIAP/Design-System)
 
 ---
 

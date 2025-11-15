@@ -58,6 +58,18 @@ cortex-bank/
 └── backend/            # API REST backend
 ```
 
+### Repositórios GitHub
+
+Cada componente do projeto possui seu próprio repositório no GitHub:
+
+- **Root Config**: [cortex-bank-root-config](https://github.com/Grupo-10-Pos-FIAP/cortex-bank-root-config)
+- **Navigation Drawer**: [cortex-bank-navigation-drawer](https://github.com/Grupo-10-Pos-FIAP/cortex-bank-navigation-drawer)
+- **Dashboard**: [cortex-bank-dashboard](https://github.com/Grupo-10-Pos-FIAP/cortex-bank-dashboard)
+- **Transactions**: [cortex-bank-transactions](https://github.com/Grupo-10-Pos-FIAP/cortex-bank-transactions)
+- **Bank Statement**: [cortex-bank-statement](https://github.com/Grupo-10-Pos-FIAP/cortex-bank-statement)
+- **Backend**: [cortex-bank-backend](https://github.com/Grupo-10-Pos-FIAP/cortex-bank-backend)
+- **Design System**: [Design-System](https://github.com/Grupo-10-Pos-FIAP/Design-System)
+
 ### Responsabilidades do Root-Config
 
 O **root-config** é o coração da arquitetura e possui as seguintes responsabilidades:
