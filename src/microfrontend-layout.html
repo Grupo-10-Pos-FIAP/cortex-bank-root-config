@@ -21,7 +21,7 @@
     <nav>
       <application name="@cortex-bank/navigation-drawer"></application>
     </nav>
-    <route default>
+    <route path="/dashboard">
       <application name="@cortex-bank/dashboard"></application>
     </route>
     <route path="/transactions">
@@ -31,4 +31,7 @@
       <application name="@cortex-bank/statement"></application>
     </route>
   </main>
+  <route default>
+    Não encontrada
+  </route>
 </single-spa-router>
