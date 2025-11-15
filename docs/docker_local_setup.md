@@ -7,7 +7,8 @@ A arquitetura atual possui:
 - **navigation-drawer** (3001)
 - **dashboard** (3002)
 - **transactions** (3003)
-- **bank-statement** (3004)
+- **statement** (3004)
+- **backend** (porta 8080)
 
 Cada módulo possui sua própria imagem, volume de `node_modules` e diretório sincronizado.
 
@@ -26,6 +27,7 @@ Cada módulo possui sua própria imagem, volume de `node_modules` e diretório s
 > - Transactions: `...`
 > - Bank Statement: `...`
 > - Root Config: `...`
+> - Backend: `...`
 
 ---
 
@@ -37,8 +39,9 @@ Antes de iniciar, o desenvolvedor precisa ter:
   - `../navigation-drawer`
   - `../dashboard`
   - `../transactions`
-  - `../bank-statement`
+  - `../statement`
   - `./root-config`
+  - `../backend`
 
 ---
 
@@ -51,7 +54,7 @@ docker-compose up --build
 ```
 
 ### O que esse comando faz:
-- **builda** as imagens de cada microfrontend usando os seus Dockerfiles
+- **builda** as imagens de cada microfrontend e do backend usando os seus Dockerfiles
 - cria volumes persistentes de `node_modules`
 - sobe cada aplicação em sua respectiva porta
 - aguarda todos os healthchecks ficarem saudáveis
@@ -72,6 +75,8 @@ O root-config irá:
 - ler o import map local
 - carregar os microfrontends das portas configuradas
 - montar o layout definido em `microfrontend-layout.html`
+
+O backend estará disponível em `http://localhost:8080` para receber requisições dos microfrontends.
 
 ---
 
@@ -136,11 +141,10 @@ Isso ajuda bastante em ambientes de desenvolvimento.
 
 Em menos de um comando, o desenvolvedor consegue rodar todo o ecossistema localmente. O Docker Compose faz todo o trabalho pesado:
 - build das imagens
-- orquestração dos microfrontends
+- orquestração dos microfrontends e backend
 - healthchecks
 - hot reload via volumes
 
 Essa abordagem garante um ambiente local consistente, escalável e isolado de variações de máquina.
 
-Se quiser, posso gerar uma **seção de troubleshooting** para problemas comuns (ports already allocated, node_modules corrompido, build lento, watchers não funcionando, etc.).
 

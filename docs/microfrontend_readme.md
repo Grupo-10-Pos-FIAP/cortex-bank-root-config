@@ -16,7 +16,7 @@ A arquitetura está dividida em:
 - **Navigation Drawer** (menu lateral)
 - **Dashboard**
 - **Transactions**
-- **Bank Statement**
+- **Statement**
 
 Cada microfrontend roda em uma porta distinta, se comunica somente via Import Maps e só conhece o root-config — nunca entre si.
 
@@ -86,7 +86,7 @@ Cada microfrontend sobe sua própria instância Webpack Dev Server:
 - Navigation Drawer: porta 3001
 - Dashboard: porta 3002
 - Transactions: porta 3003
-- Bank Statement: porta 3004
+- Statement: porta 3004
 
 Quando todos estão de pé, o root-config injeta os módulos do import map e inicializa o sistema.
 
@@ -103,6 +103,16 @@ O docker-compose orquestra a subida simultânea de todos, garantindo:
 - dependência entre serviços
 
 O root-config só sobe quando todos os MFEs estiverem saudáveis.
+
+---
+
+## 🔙 Backend API
+
+O backend está na pasta `backend` e roda no Docker na porta **8080**.
+
+É uma API REST em **Node.js** com **Express** e **MongoDB**, orquestrada pelo `docker-compose.yml` na mesma rede dos microfrontends.
+
+Os microfrontends fazem requisições HTTP para `http://localhost:8080` para acessar os endpoints da API.
 
 ---
 
