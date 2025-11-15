@@ -55,13 +55,13 @@ services:
       retries: 10
       start_period: 300s
 
-  bank-statement:
+  statement:
     build:
-      context: ../bank-statement
+      context: ../statement
     volumes:
-      - ../bank-statement/src:/app/src
-      - ../bank-statement/public:/app/public
-      - bank-statement-node-modules:/app/node_modules
+      - ../statement/src:/app/src
+      - ../statement/public:/app/public
+      - statement-node-modules:/app/node_modules
     ports:
       - "3004:3004"
     networks:
@@ -91,12 +91,13 @@ services:
         condition: service_healthy
       transactions:
         condition: service_healthy
-      bank-statement:
+      statement:
         condition: service_healthy
 
   backend:
     build:
-      context: ../back-tech-challenge-2 
+      context: ../backend
+      dockerfile: DockerFile
     ports:
       - "8080:3000"
     networks:
@@ -110,5 +111,5 @@ volumes:
   navigation-drawer-node-modules:
   dashboard-node-modules:
   transactions-node-modules:
-  bank-statement-node-modules:
+  statement-node-modules:
   root-config-node-modules:
