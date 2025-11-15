@@ -11,6 +11,8 @@ module.exports = (webpackConfigEnv, argv) => {
     argv,
     disableHtmlGeneration: true,
   });
+    
+  const PORT = 3000;
 
   return merge(defaultConfig, {
     // modify the webpack config however you'd like to by adding to this object
@@ -24,5 +26,29 @@ module.exports = (webpackConfigEnv, argv) => {
         },
       }),
     ],
+
+    devServer: {
+      hot: true,
+      host: "0.0.0.0",
+      port: PORT,
+      allowedHosts: "all",
+      historyApiFallback: true,
+      watchFiles: ["src//", "public//"],
+
+      client: {
+        webSocketURL: {
+          protocol: "ws",
+          hostname: "localhost",
+          port: PORT,
+        },
+      },
+    },
+
+    watchOptions: {
+      poll: 1000,
+      aggregateTimeout: 300,
+      ignored: /node_modules/,
+    },
+
   });
 };
