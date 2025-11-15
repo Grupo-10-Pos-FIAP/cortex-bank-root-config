@@ -1,0 +1,34 @@
+<single-spa-router>
+  <!--
+
+    This is the single-spa Layout Definition for your microfrontends.
+    See https://single-spa.js.org/docs/layout-definition/ for more information.
+
+  -->
+
+  <!-- Example layouts you might find helpful:
+
+  <nav>
+    <application name="@org/navbar"></application>
+  </nav>
+  <route path="settings">
+    <application name="@org/settings"></application>
+  </route>
+
+  -->
+
+  <main>    
+    <nav>
+      <application name="@cortex-bank/navigation-drawer"></application>
+    </nav>
+    <route default>
+      <application name="@cortex-bank/dashboard"></application>
+    </route>
+    <route path="/transactions">
+      <application name="@cortex-bank/transactions"></application>
+    </route>
+    <route path="/bank-statement">
+      <application name="@cortex-bank/bank-statement"></application>
+    </route>
+  </main>
+</single-spa-router>

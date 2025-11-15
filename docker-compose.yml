@@ -1,0 +1,114 @@
+version: '3.8'
+
+services:
+  navigation-drawer:
+    build:
+      context: ../navigation-drawer
+    volumes:
+      - ../navigation-drawer/src:/app/src
+      - ../navigation-drawer/public:/app/public
+      - navigation-drawer-node-modules:/app/node_modules
+    ports:
+      - "3001:3001"
+    networks:
+      - cortex-bank-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 300s
+
+  dashboard:
+    build:
+      context: ../dashboard
+    volumes:
+      - ../dashboard/src:/app/src
+      - ../dashboard/public:/app/public
+      - dashboard-node-modules:/app/node_modules
+    ports:
+      - "3002:3002"
+    networks:
+      - cortex-bank-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3002"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 300s
+
+  transactions:
+    build:
+      context: ../transactions
+    volumes:
+      - ../transactions/src:/app/src
+      - ../transactions/public:/app/public
+      - transactions-node-modules:/app/node_modules
+    ports:
+      - "3003:3003"
+    networks:
+      - cortex-bank-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3003"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 300s
+
+  bank-statement:
+    build:
+      context: ../bank-statement
+    volumes:
+      - ../bank-statement/src:/app/src
+      - ../bank-statement/public:/app/public
+      - bank-statement-node-modules:/app/node_modules
+    ports:
+      - "3004:3004"
+    networks:
+      - cortex-bank-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3004"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 300s
+
+  root-config:
+    build:
+      context: .
+    volumes:
+      - ./src:/app/src
+      - ./public:/app/public
+      - root-config-node-modules:/app/node_modules
+    ports:
+      - "3000:3000"
+    networks:
+      - cortex-bank-network
+    depends_on:
+      navigation-drawer:
+        condition: service_healthy
+      dashboard:
+        condition: service_healthy
+      transactions:
+        condition: service_healthy
+      bank-statement:
+        condition: service_healthy
+
+  backend:
+    build:
+      context: ../back-tech-challenge-2 
+    ports:
+      - "8080:3000"
+    networks:
+      - cortex-bank-network
+
+networks:
+  cortex-bank-network:
+    driver: bridge
+
+volumes:
+  navigation-drawer-node-modules:
+  dashboard-node-modules:
+  transactions-node-modules:
+  bank-statement-node-modules:
+  root-config-node-modules:

@@ -1,0 +1,146 @@
+# Como Subir a Aplicação Localmente com Docker Compose
+
+Este guia explica, de forma direta e prática, como qualquer pessoa pode levantar todo o ecossistema de microfrontends localmente utilizando **Docker Compose**.
+
+A arquitetura atual possui:
+- **root-config** (porta 3000)
+- **navigation-drawer** (3001)
+- **dashboard** (3002)
+- **transactions** (3003)
+- **bank-statement** (3004)
+
+Cada módulo possui sua própria imagem, volume de `node_modules` e diretório sincronizado.
+
+---
+
+## Requisitos
+
+---
+
+## Repositórios dos Microfrontends
+
+> **Insira aqui as URLs dos repositórios GitHub de cada microfrontend**
+>
+> - Navigation Drawer: `...`
+> - Dashboard: `...`
+> - Transactions: `...`
+> - Bank Statement: `...`
+> - Root Config: `...`
+
+---
+
+Antes de iniciar, o desenvolvedor precisa ter:
+
+- **Docker** instalado
+- **Docker Compose** instalado (incluso no Docker Desktop)
+- A pasta do projeto completa, com os microfrontends em:
+  - `../navigation-drawer`
+  - `../dashboard`
+  - `../transactions`
+  - `../bank-statement`
+  - `./root-config`
+
+---
+
+## 🚀 1. Subindo tudo com Docker Compose
+
+No diretório `root-config` (onde está o `docker-compose.yml`):
+
+```sh
+docker-compose up --build
+```
+
+### O que esse comando faz:
+- **builda** as imagens de cada microfrontend usando os seus Dockerfiles
+- cria volumes persistentes de `node_modules`
+- sobe cada aplicação em sua respectiva porta
+- aguarda todos os healthchecks ficarem saudáveis
+- sobe o root-config apenas quando tudo estiver pronto
+
+---
+
+## 🧪 2. Acessando o sistema
+
+Quando todos os containers estiverem verdes e estáveis:
+
+👉 Acesse:
+```
+http://localhost:3000
+```
+
+O root-config irá:
+- ler o import map local
+- carregar os microfrontends das portas configuradas
+- montar o layout definido em `microfrontend-layout.html`
+
+---
+
+## 🔄 3. Atualizações em tempo real
+
+Graças aos volumes mapeados:
+- qualquer alteração nos arquivos **src/** dos microfrontends é refletida em tempo real
+- webpack-dev-server dentro do container recarrega automaticamente
+
+Não é necessário rebuildar imagens para alterações simples de código.
+
+---
+
+## 🛑 4. Parar tudo
+
+Para desligar todos os containers:
+
+```sh
+docker-compose down
+```
+
+Para limpar volumes de `node_modules` e começar do zero:
+
+```sh
+docker-compose down -v
+```
+
+---
+
+## 🏗 5. Rebuild completo (quando necessário)
+
+Se você alterar dependências, Dockerfiles ou package.json:
+
+```sh
+docker-compose up --build --force-recreate
+```
+
+---
+
+## 🧹 6. Limpando imagens antigas
+
+```sh
+docker system prune -af
+```
+
+Isso ajuda bastante em ambientes de desenvolvimento.
+
+---
+
+## 📌 Resumo operacional
+
+| Tarefa | Comando |
+|-------|---------|
+| Subir tudo | `docker-compose up --build` |
+| Parar | `docker-compose down` |
+| Limpar volumes | `docker-compose down -v` |
+| Rebuild completo | `docker-compose up --build --force-recreate` |
+
+---
+
+## 🎯 Conclusão
+
+Em menos de um comando, o desenvolvedor consegue rodar todo o ecossistema localmente. O Docker Compose faz todo o trabalho pesado:
+- build das imagens
+- orquestração dos microfrontends
+- healthchecks
+- hot reload via volumes
+
+Essa abordagem garante um ambiente local consistente, escalável e isolado de variações de máquina.
+
+Se quiser, posso gerar uma **seção de troubleshooting** para problemas comuns (ports already allocated, node_modules corrompido, build lento, watchers não funcionando, etc.).
+
