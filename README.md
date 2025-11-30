@@ -32,6 +32,7 @@ A arquitetura do projeto está dividida nos seguintes componentes:
 | **dashboard** | 3002 | Microfrontend do painel principal |
 | **transactions** | 3003 | Microfrontend de transações bancárias |
 | **statement** | 3004 | Microfrontend de extrato bancário |
+| **auth** | 3005 | Microfrontend de autenticação |
 | **backend** | 8080 | API REST em Node.js com Express e MongoDB |
 
 Cada microfrontend roda em uma porta distinta e se comunica exclusivamente através de **Import Maps**, conhecendo apenas o root-config — nunca entre si. Essa abordagem garante isolamento completo e independência de deploy.
@@ -46,16 +47,17 @@ O projeto segue uma estrutura modular onde cada microfrontend é um repositório
 
 ```
 cortex-bank/
-├── root-config/          # Orquestrador (este diretório)
-│   ├── docs/            # Documentação detalhada
-│   ├── src/             # Código fonte do root-config
-│   ├── Dockerfile       # Configuração Docker
+├── root-config/           # Orquestrador (este diretório)
+│   ├── docs/              # Documentação detalhada
+│   ├── src/               # Código fonte do root-config
+│   ├── Dockerfile         # Configuração Docker
 │   └── docker-compose.yml
-├── navigation-drawer/    # Microfrontend de navegação
-├── dashboard/           # Microfrontend do dashboard
-├── transactions/        # Microfrontend de transações
-├── bank-statement/      # Microfrontend de extrato
-└── backend/            # API REST backend
+├── auth/                  # Microfrontend de autenticação
+├── navigation-drawer/     # Microfrontend de navegação
+├── dashboard/             # Microfrontend do dashboard
+├── transactions/          # Microfrontend de transações
+├── bank-statement/        # Microfrontend de extrato
+└── backend/               # API REST backend
 ```
 
 ### Repositórios GitHub
@@ -67,6 +69,7 @@ Cada componente do projeto possui seu próprio repositório no GitHub:
 - **Dashboard**: [cortex-bank-dashboard](https://github.com/Grupo-10-Pos-FIAP/cortex-bank-dashboard)
 - **Transactions**: [cortex-bank-transactions](https://github.com/Grupo-10-Pos-FIAP/cortex-bank-transactions)
 - **Bank Statement**: [cortex-bank-statement](https://github.com/Grupo-10-Pos-FIAP/cortex-bank-statement)
+- **Authentication**: [cortex-bank-auth](https://github.com/Grupo-10-Pos-FIAP/cortex-bank-auth)
 - **Backend**: [cortex-bank-backend](https://github.com/Grupo-10-Pos-FIAP/cortex-bank-backend)
 - **Design System**: [Design-System](https://github.com/Grupo-10-Pos-FIAP/Design-System)
 
@@ -98,7 +101,8 @@ Para executar o projeto completo, é necessário ter todos os microfrontends na 
 ```
 projeto/
 ├── root-config/          # Diretório atual
-├── navigation-drawer/     # Um nível acima
+├── auth/                 # Um nível acima
+├── navigation-drawer/    # Um nível acima
 ├── dashboard/            # Um nível acima
 ├── transactions/         # Um nível acima
 ├── bank-statement/       # Um nível acima
@@ -122,6 +126,7 @@ docker-compose up --build
 ```
 
 **O que esse comando faz:**
+
 - Constrói as imagens Docker de cada microfrontend e do backend usando seus respectivos Dockerfiles
 - Cria volumes persistentes de `node_modules` para cada serviço
 - Sobe cada aplicação em sua respectiva porta
@@ -135,6 +140,7 @@ Quando todos os containers estiverem rodando e estáveis:
 👉 **Acesse:** `http://localhost:3000`
 
 O root-config irá:
+
 - Ler o import map local
 - Carregar os microfrontends das portas configuradas
 - Montar o layout definido em `microfrontend-layout.html`
@@ -144,6 +150,7 @@ O backend estará disponível em `http://localhost:8080` para receber requisiç�
 #### 3. Atualizações em tempo real
 
 Graças aos volumes mapeados no Docker Compose:
+
 - Qualquer alteração nos arquivos `src/` dos microfrontends é refletida em tempo real
 - O webpack-dev-server dentro do container recarrega automaticamente
 - Não é necessário rebuildar imagens para alterações simples de código
@@ -153,36 +160,42 @@ Graças aos volumes mapeados no Docker Compose:
 Para desenvolvimento local sem Docker, é necessário:
 
 1. Instalar dependências em cada microfrontend:
-   ```bash
-   cd ../navigation-drawer && npm install
-   cd ../dashboard && npm install
-   cd ../transactions && npm install
-   cd ../bank-statement && npm install
-   cd ../backend && npm install
-   ```
+
+```bash
+cd ../auth && npm install
+cd ../navigation-drawer && npm install
+cd ../dashboard && npm install
+cd ../transactions && npm install
+cd ../bank-statement && npm install
+cd ../backend && npm install
+```
 
 2. Iniciar cada serviço em terminais separados:
-   ```bash
-   # Terminal 1 - Navigation Drawer
-   cd ../navigation-drawer && npm start
-   
-   # Terminal 2 - Dashboard
-   cd ../dashboard && npm start
-   
-   # Terminal 3 - Transactions
-   cd ../transactions && npm start
-   
-   # Terminal 4 - Bank Statement
-   cd ../bank-statement && npm start
-   
-   # Terminal 5 - Backend
-   cd ../backend && npm start
-   
-   # Terminal 6 - Root Config
-   npm start
-   ```
 
-3. Acessar `http://localhost:3000`
+```bash
+# Terminal 1 - Navigation Drawer
+cd ../navigation-drawer && npm start
+
+# Terminal 2 - Dashboard
+cd ../dashboard && npm start
+
+# Terminal 3 - Transactions
+cd ../transactions && npm start
+
+# Terminal 4 - Bank Statement
+cd ../bank-statement && npm start
+
+# Terminal 5 - Backend
+cd ../backend && npm start
+
+# Terminal 6 - Authentication
+cd ../auth && npm start
+
+# Terminal 7 - Root Config
+npm start
+```
+
+3.Acessar `http://localhost:3000`
 
 ---
 
@@ -205,6 +218,7 @@ Para desenvolvimento local sem Docker, é necessário:
 #### 1. Independência Total Entre Microfrontends
 
 Cada microfrontend possui:
+
 - Seu próprio Webpack
 - Seu próprio `package.json`
 - Seu próprio ciclo de build
@@ -212,6 +226,7 @@ Cada microfrontend possui:
 - Seu próprio deploy
 
 Os microfrontends **não compartilham código diretamente** — apenas via CDN através de import maps. Isso garante:
+
 - ✅ Deploy independente
 - ✅ Falhas isoladas
 - ✅ Evolução tecnológica granular
@@ -244,12 +259,14 @@ No modo produção, essas URLs podem ser substituídas por CDN ou storage remoto
 ### Integração com Docker
 
 Cada microfrontend possui seu próprio Dockerfile otimizado para desenvolvimento:
+
 - Baseado em Node.js 22 Alpine (leve e rápido)
 - Cache de camadas para dependências
 - Hot reload via volumes mapeados
 - Healthchecks robustos
 
 O `docker-compose.yml` orquestra:
+
 - Build isolado de cada serviço
 - Volumes independentes de `node_modules`
 - Mount dos diretórios `src/` e `public/` para hot reload
@@ -265,6 +282,7 @@ Para informações mais detalhadas sobre aspectos específicos da arquitetura, c
 ### 📘 [Arquitetura de Microfrontends](./docs/microfrontend_readme.md)
 
 Documento completo explicando:
+
 - Visão geral da arquitetura
 - Papel do root-config
 - Import Maps e como funcionam
@@ -279,6 +297,7 @@ Documento completo explicando:
 ### 🐳 [Como Subir a Aplicação Localmente](./docs/docker_local_setup.md)
 
 Guia prático detalhado sobre:
+
 - Requisitos do sistema
 - Passo a passo para subir com Docker Compose
 - Como acessar o sistema
@@ -291,6 +310,7 @@ Guia prático detalhado sobre:
 ### 🔧 [Estrutura Docker Explicada](./docs/docker_explanation.md)
 
 Documentação técnica linha a linha sobre:
+
 - Dockerfile — explicação detalhada de cada instrução
 - docker-compose.yml — explicação de cada configuração
 - Volumes e montagens
@@ -371,4 +391,3 @@ Para mais detalhes técnicos, consulte a [documentação completa](./docs/) na p
 ---
 
 **Desenvolvido para fins acadêmicos e de demonstração de arquitetura de microfrontends.**
-
