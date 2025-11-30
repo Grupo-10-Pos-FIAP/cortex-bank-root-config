@@ -1,6 +1,30 @@
 version: '3.8'
 
 services:
+  auth:
+    build:
+      context: ../auth
+      args:
+        PORT: 3005
+    volumes:
+      - ../auth/src:/app/src
+      - ../auth/public:/app/public
+      - auth-node-modules:/app/node_modules
+    ports:
+      - "3005:3005"
+    networks:
+      - cortex-bank-network
+    environment:
+      - PORT=3005
+      - ENABLE_HOT_RELOAD=true
+      - CHOKIDAR_USEPOLLING=true
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3005"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 300s
+
   navigation-drawer:
     build:
       context: ../navigation-drawer
@@ -108,6 +132,7 @@ networks:
     driver: bridge
 
 volumes:
+  auth-node-modules:
   navigation-drawer-node-modules:
   dashboard-node-modules:
   transactions-node-modules:
