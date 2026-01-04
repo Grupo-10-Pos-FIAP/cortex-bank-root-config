@@ -17,20 +17,26 @@
 
   -->
 
-  <main>    
-    <nav>
-      <application name="@cortex-bank/navigation-drawer"></application>
-    </nav>
+  <main>
     <route path="/auth">
       <application name="@cortex-bank/auth"></application>
     </route>
     <route path="/dashboard">
+      <nav>
+        <application name="@cortex-bank/navigation-drawer"></application>
+      </nav>
       <application name="@cortex-bank/dashboard"></application>
     </route>
     <route path="/transactions">
+      <nav>
+        <application name="@cortex-bank/navigation-drawer"></application>
+      </nav>
       <application name="@cortex-bank/transactions"></application>
     </route>
     <route path="/statement">
+      <nav>
+        <application name="@cortex-bank/navigation-drawer"></application>
+      </nav>
       <application name="@cortex-bank/statement"></application>
     </route>
   </main>
