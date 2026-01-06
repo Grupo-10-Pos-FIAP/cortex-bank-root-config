@@ -22,12 +22,7 @@
   </script>
   <link rel="preload" href="https://cdn.jsdelivr.net/npm/single-spa@6.0.3/lib/es2015/esm/single-spa.min.js" as="module">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css">
-
-  <!-- Import Google Fonts: Roboto (Design System) -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-
-  <!-- Add your organization's prod import map URL to this script's src  -->
-  <!-- <script type="injector-importmap" src="/importmap.json"></script> -->
 
   <% if (isLocal) { %>
   <script type="injector-importmap">
@@ -42,6 +37,22 @@
         "react": "https://esm.sh/react@19.1.1?dev",
         "react-dom": "https://esm.sh/react-dom@19.1.1?dev",
         "react-dom/client": "https://esm.sh/react-dom@19.1.1/client?dev"
+      }
+    }
+  </script>
+  <% } else { %>
+  <script type="injector-importmap">
+    {
+      "imports": {
+        "@cortex-bank/root-config": "https://seu-cdn.com/cortex-bank-root-config.js",
+        "@cortex-bank/navigation-drawer": "https://seu-cdn.com/cortex-bank-navigation-drawer.js",
+        "@cortex-bank/dashboard": "https://seu-cdn.com/cortex-bank-dashboard.js",
+        "@cortex-bank/transactions": "https://seu-cdn.com/cortex-bank-transactions.js",
+        "@cortex-bank/statement": "https://seu-cdn.com/cortex-bank-statement.js",
+        "@cortex-bank/auth": "https://seu-cdn.com/cortex-bank-auth.js",
+        "react": "https://esm.sh/react@19.1.1",
+        "react-dom": "https://esm.sh/react-dom@19.1.1",
+        "react-dom/client": "https://esm.sh/react-dom@19.1.1/client"
       }
     }
   </script>
