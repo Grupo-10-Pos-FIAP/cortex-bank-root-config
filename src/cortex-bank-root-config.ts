@@ -6,6 +6,25 @@ import {
 } from "single-spa-layout";
 import microfrontendLayout from "./microfrontend-layout.html";
 
+function checkAuthAndRedirect() {
+  const token = localStorage.getItem("token");
+  const currentPath = window.location.pathname;
+
+  const protectedRoutes = ["/dashboard", "/transactions", "/statement"];
+
+  if (token && (currentPath === "/" || currentPath === "/auth")) {
+    window.location.href = "/dashboard";
+    return;
+  }
+
+  if (!token && protectedRoutes.includes(currentPath)) {
+    window.location.href = "/auth";
+    return;
+  }
+}
+
+checkAuthAndRedirect();
+
 const routes = constructRoutes(microfrontendLayout);
 const applications = constructApplications({
   routes,
