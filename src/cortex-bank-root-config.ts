@@ -37,3 +37,18 @@ const layoutEngine = constructLayoutEngine({ routes, applications });
 applications.forEach(registerApplication);
 layoutEngine.activate();
 start();
+
+// Atualiza o atributo data-route no body quando a rota muda
+function updateRouteAttribute() {
+  const pathname = window.location.pathname;
+  if (document.body) {
+    document.body.setAttribute('data-route', pathname);
+  }
+}
+
+// Atualiza quando a rota muda
+window.addEventListener('popstate', updateRouteAttribute);
+window.addEventListener('hashchange', updateRouteAttribute);
+
+// Atualiza após o single-spa iniciar
+setTimeout(updateRouteAttribute, 0);
