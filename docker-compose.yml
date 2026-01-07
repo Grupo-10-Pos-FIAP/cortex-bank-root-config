@@ -7,7 +7,7 @@ services:
     volumes:
       - ../auth/src:/app/src
       - ../auth/public:/app/public
-      - auth-node-modules:/app/node_modules
+      #- auth-node-modules:/app/node_modules
     ports:
       - "3005:3005"
     networks:
@@ -123,7 +123,20 @@ services:
       context: ../backend
       dockerfile: DockerFile
     ports:
-      - "8080:8080"
+      - "8080:3000"
+    environment:
+      MONGO_URI: mongodb://mongo:27017/app
+    depends_on:
+      - mongo
+    networks:
+      - cortex-bank-network
+
+  mongo:
+    image: mongo:4.4
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
     networks:
       - cortex-bank-network
 
@@ -132,9 +145,10 @@ networks:
     driver: bridge
 
 volumes:
-  auth-node-modules:
+  #auth-node-modules:
   navigation-drawer-node-modules:
   dashboard-node-modules:
   transactions-node-modules:
   statement-node-modules:
   root-config-node-modules:
+  mongo_data:

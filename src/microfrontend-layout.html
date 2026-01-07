@@ -21,6 +21,12 @@
     <route path="/auth">
       <application name="@cortex-bank/auth"></application>
     </route>
+    <route path="/">
+      <nav>
+        <application name="@cortex-bank/navigation-drawer"></application>
+      </nav>
+      <application name="@cortex-bank/dashboard"></application>
+    </route>
     <route path="/dashboard">
       <nav>
         <application name="@cortex-bank/navigation-drawer"></application>

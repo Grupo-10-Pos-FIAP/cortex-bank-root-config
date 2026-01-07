@@ -10,7 +10,7 @@ function checkAuthAndRedirect() {
   const token = localStorage.getItem("token");
   const currentPath = window.location.pathname;
 
-  const protectedRoutes = ["/dashboard", "/transactions", "/statement"];
+  const protectedRoutes = ["/","/dashboard", "/transactions", "/statement"];
 
   if (token && (currentPath === "/" || currentPath === "/auth")) {
     window.location.href = "/dashboard";
