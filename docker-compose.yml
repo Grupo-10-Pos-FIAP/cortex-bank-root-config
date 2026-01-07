@@ -29,7 +29,7 @@ services:
     volumes:
       - ../navigation-drawer/src:/app/src
       - ../navigation-drawer/public:/app/public
-      - navigation-drawer-node-modules:/app/node_modules
+      #- navigation-drawer-node-modules:/app/node_modules
     ports:
       - "3001:3001"
     networks:
@@ -47,7 +47,7 @@ services:
     volumes:
       - ../dashboard/src:/app/src
       - ../dashboard/public:/app/public
-      - dashboard-node-modules:/app/node_modules
+      #- dashboard-node-modules:/app/node_modules
     ports:
       - "3002:3002"
     networks:
@@ -65,7 +65,7 @@ services:
     volumes:
       - ../transactions/src:/app/src
       - ../transactions/public:/app/public
-      - transactions-node-modules:/app/node_modules
+      #- transactions-node-modules:/app/node_modules
     ports:
       - "3003:3003"
     networks:
@@ -83,7 +83,7 @@ services:
     volumes:
       - ../statement/src:/app/src
       - ../statement/public:/app/public
-      - statement-node-modules:/app/node_modules
+      #- statement-node-modules:/app/node_modules
     ports:
       - "3004:3004"
     networks:
@@ -101,7 +101,7 @@ services:
     volumes:
       - ./src:/app/src
       - ./public:/app/public
-      - root-config-node-modules:/app/node_modules
+      #- root-config-node-modules:/app/node_modules
     ports:
       - "3000:3000"
     networks:
@@ -146,9 +146,9 @@ networks:
 
 volumes:
   #auth-node-modules:
-  navigation-drawer-node-modules:
-  dashboard-node-modules:
-  transactions-node-modules:
-  statement-node-modules:
-  root-config-node-modules:
+  #navigation-drawer-node-modules:
+  #dashboard-node-modules:
+  #transactions-node-modules:
+  #statement-node-modules:
+  #root-config-node-modules:
   mongo_data:
