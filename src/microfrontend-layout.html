@@ -18,28 +18,28 @@
   -->
 
   <main>
-    <route path="/auth">
+    <route path="/auth" exact>
       <application name="@cortex-bank/auth"></application>
     </route>
-    <route path="/">
+    <route path="/" exact>
       <nav>
         <application name="@cortex-bank/navigation-drawer"></application>
       </nav>
       <application name="@cortex-bank/dashboard"></application>
     </route>
-    <route path="/dashboard">
+    <route path="/dashboard" exact>
       <nav>
         <application name="@cortex-bank/navigation-drawer"></application>
       </nav>
       <application name="@cortex-bank/dashboard"></application>
     </route>
-    <route path="/transactions">
+    <route path="/transactions" exact>
       <nav>
         <application name="@cortex-bank/navigation-drawer"></application>
       </nav>
       <application name="@cortex-bank/transactions"></application>
     </route>
-    <route path="/statement">
+    <route path="/statement" exact>
       <nav>
         <application name="@cortex-bank/navigation-drawer"></application>
       </nav>
