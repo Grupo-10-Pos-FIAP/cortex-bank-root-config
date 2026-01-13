@@ -121,7 +121,7 @@ services:
   backend:
     build:
       context: ../backend
-      dockerfile: DockerFile
+      dockerfile: Dockerfile.dev
     ports:
       - "8080:3000"
     environment:
