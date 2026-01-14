@@ -15,11 +15,22 @@ module.exports = (webpackConfigEnv, argv) => {
     
   const PORT = 3000;
   const isLocal = webpackConfigEnv && webpackConfigEnv.isLocal;
-  // Em produção/preview, variáveis de ambiente são obrigatórias
-  // Detecta ambiente de produção (não local)
-  const isProduction = !isLocal && process.env.NODE_ENV === 'production';
+  // Detecta ambiente de produção/preview (não local)
+  // Na Vercel, NODE_ENV pode ser 'production' ou não estar definido
+  // Verificamos também se estamos em um ambiente de build (não dev server)
+  const isProduction = !isLocal && (process.env.NODE_ENV === 'production' || process.env.VERCEL);
 
-  // Validação: em produção, variáveis de ambiente são obrigatórias
+  // URLs dos microfrontends
+  const microfrontendUrls = {
+    rootConfig: process.env.MF_URL_ROOT_CONFIG || (isLocal ? "//localhost:3000" : ""),
+    navigationDrawer: process.env.MF_URL_NAVIGATION_DRAWER || (isLocal ? "//localhost:3001" : ""),
+    dashboard: process.env.MF_URL_DASHBOARD || (isLocal ? "//localhost:3002" : ""),
+    transactions: process.env.MF_URL_TRANSACTIONS || (isLocal ? "//localhost:3003" : ""),
+    statement: process.env.MF_URL_STATEMENT || (isLocal ? "//localhost:3004" : ""),
+    auth: process.env.MF_URL_AUTH || (isLocal ? "//localhost:3005" : ""),
+  };
+
+  // Validação: em produção/preview, variáveis de ambiente são obrigatórias
   if (isProduction) {
     const requiredEnvVars = [
       'MF_URL_ROOT_CONFIG',
@@ -43,19 +54,21 @@ module.exports = (webpackConfigEnv, argv) => {
         `📚 Veja: docs/vercel_deploy.md ou DEPLOY_QUICK_START.md`
       );
     }
-  }
 
-  // URLs dos microfrontends - SEM fallbacks hardcoded
-  // Em local: usa localhost
-  // Em produção/preview: usa variáveis de ambiente (obrigatórias, validadas acima)
-  const microfrontendUrls = {
-    rootConfig: process.env.MF_URL_ROOT_CONFIG || (isLocal ? "//localhost:3000" : ""),
-    navigationDrawer: process.env.MF_URL_NAVIGATION_DRAWER || (isLocal ? "//localhost:3001" : ""),
-    dashboard: process.env.MF_URL_DASHBOARD || (isLocal ? "//localhost:3002" : ""),
-    transactions: process.env.MF_URL_TRANSACTIONS || (isLocal ? "//localhost:3003" : ""),
-    statement: process.env.MF_URL_STATEMENT || (isLocal ? "//localhost:3004" : ""),
-    auth: process.env.MF_URL_AUTH || (isLocal ? "//localhost:3005" : ""),
-  };
+    // Validação adicional: verifica se as URLs não estão vazias
+    const emptyUrls = Object.entries(microfrontendUrls)
+      .filter(([key, value]) => !value || value.trim() === '')
+      .map(([key]) => key);
+    
+    if (emptyUrls.length > 0) {
+      throw new Error(
+        `❌ ERRO: URLs dos microfrontends estão vazias:\n` +
+        `   ${emptyUrls.join(', ')}\n\n` +
+        `📝 Verifique se as variáveis de ambiente estão configuradas corretamente na Vercel.\n` +
+        `📚 Veja: docs/vercel_deploy.md ou DEPLOY_QUICK_START.md`
+      );
+    }
+  }
 
   return merge(defaultConfig, {
     // modify the webpack config however you'd like to by adding to this object
