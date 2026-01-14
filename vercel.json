@@ -35,7 +35,7 @@
       ]
     },
     {
-      "source": "/(.*\\.(js|mjs))",
+      "source": "/(.*\\.js|.*\\.mjs)",
       "headers": [
         {
           "key": "Content-Type",
@@ -56,7 +56,7 @@
       ]
     },
     {
-      "source": "/(.*\\.(html|ejs))",
+      "source": "/(.*\\.html|.*\\.ejs)",
       "headers": [
         {
           "key": "Cache-Control",

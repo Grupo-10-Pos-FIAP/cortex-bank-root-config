@@ -18,10 +18,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '22'
-          cache: 'npm'
       
       - name: Install dependencies
-        run: npm ci
+        run: npm install
       
       - name: Run linter
         run: npm run lint
@@ -29,12 +28,12 @@ jobs:
       - name: Build project
         run: npm run build
         env:
-          VERCEL_URL_ROOT_CONFIG: ${{ secrets.VERCEL_URL_ROOT_CONFIG || 'https://cortex-bank-root-config.vercel.app' }}
-          VERCEL_URL_NAVIGATION_DRAWER: ${{ secrets.VERCEL_URL_NAVIGATION_DRAWER || 'https://cortex-bank-navigation-drawer.vercel.app' }}
-          VERCEL_URL_DASHBOARD: ${{ secrets.VERCEL_URL_DASHBOARD || 'https://cortex-bank-dashboard.vercel.app' }}
-          VERCEL_URL_TRANSACTIONS: ${{ secrets.VERCEL_URL_TRANSACTIONS || 'https://cortex-bank-transactions.vercel.app' }}
-          VERCEL_URL_STATEMENT: ${{ secrets.VERCEL_URL_STATEMENT || 'https://cortex-bank-statement.vercel.app' }}
-          VERCEL_URL_AUTH: ${{ secrets.VERCEL_URL_AUTH || 'https://cortex-bank-auth.vercel.app' }}
+          MF_URL_ROOT_CONFIG: ${{ secrets.MF_URL_ROOT_CONFIG || 'https://cortex-bank-root-config.vercel.app' }}
+          MF_URL_NAVIGATION_DRAWER: ${{ secrets.MF_URL_NAVIGATION_DRAWER || 'https://cortex-bank-navigation-drawer.vercel.app' }}
+          MF_URL_DASHBOARD: ${{ secrets.MF_URL_DASHBOARD || 'https://cortex-bank-dashboard.vercel.app' }}
+          MF_URL_TRANSACTIONS: ${{ secrets.MF_URL_TRANSACTIONS || 'https://cortex-bank-transactions.vercel.app' }}
+          MF_URL_STATEMENT: ${{ secrets.MF_URL_STATEMENT || 'https://cortex-bank-statement.vercel.app' }}
+          MF_URL_AUTH: ${{ secrets.MF_URL_AUTH || 'https://cortex-bank-auth.vercel.app' }}
       
       - name: Check build output
         run: |
