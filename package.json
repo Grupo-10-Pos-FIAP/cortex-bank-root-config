@@ -7,9 +7,9 @@
     "format": "prettier --write .",
     "check-format": "prettier --check .",
     "prepare": "husky install",
-    "build": "concurrently npm:build:*",
+    "build": "npm run build:webpack",
     "build:webpack": "webpack --mode=production",
-    "build:types": "tsc"
+    "build:types": "tsc --noEmit"
   },
   "devDependencies": {
     "@babel/core": "^7.23.3",
