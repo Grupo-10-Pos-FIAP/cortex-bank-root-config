@@ -1,6 +1,7 @@
 const { merge } = require("webpack-merge");
 const singleSpaDefaults = require("webpack-config-single-spa-ts");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpack = require("webpack");
 
 module.exports = (webpackConfigEnv, argv) => {
   const orgName = "cortex-bank";
@@ -13,16 +14,62 @@ module.exports = (webpackConfigEnv, argv) => {
   });
     
   const PORT = 3000;
+  const isLocal = webpackConfigEnv && webpackConfigEnv.isLocal;
+  // Em produção/preview, variáveis de ambiente são obrigatórias
+  // Detecta ambiente de produção (não local)
+  const isProduction = !isLocal && process.env.NODE_ENV === 'production';
+
+  // Validação: em produção, variáveis de ambiente são obrigatórias
+  if (isProduction) {
+    const requiredEnvVars = [
+      'MF_URL_ROOT_CONFIG',
+      'MF_URL_NAVIGATION_DRAWER',
+      'MF_URL_DASHBOARD',
+      'MF_URL_TRANSACTIONS',
+      'MF_URL_STATEMENT',
+      'MF_URL_AUTH'
+    ];
+
+    const missingVars = requiredEnvVars.filter(varName => !process.env[varName]);
+    
+    if (missingVars.length > 0) {
+      throw new Error(
+        `❌ ERRO: Variáveis de ambiente obrigatórias não definidas:\n` +
+        `   ${missingVars.join(', ')}\n\n` +
+        `📝 Configure essas variáveis de ambiente:\n` +
+        `   - Na Vercel: Settings → Environment Variables\n` +
+        `   - Ou exporte antes do build: export MF_URL_ROOT_CONFIG=...\n` +
+        `   (Selecione: Production, Preview, Development)\n\n` +
+        `📚 Veja: docs/vercel_deploy.md ou DEPLOY_QUICK_START.md`
+      );
+    }
+  }
+
+  // URLs dos microfrontends - SEM fallbacks hardcoded
+  // Em local: usa localhost
+  // Em produção/preview: usa variáveis de ambiente (obrigatórias, validadas acima)
+  const microfrontendUrls = {
+    rootConfig: process.env.MF_URL_ROOT_CONFIG || (isLocal ? "//localhost:3000" : ""),
+    navigationDrawer: process.env.MF_URL_NAVIGATION_DRAWER || (isLocal ? "//localhost:3001" : ""),
+    dashboard: process.env.MF_URL_DASHBOARD || (isLocal ? "//localhost:3002" : ""),
+    transactions: process.env.MF_URL_TRANSACTIONS || (isLocal ? "//localhost:3003" : ""),
+    statement: process.env.MF_URL_STATEMENT || (isLocal ? "//localhost:3004" : ""),
+    auth: process.env.MF_URL_AUTH || (isLocal ? "//localhost:3005" : ""),
+  };
 
   return merge(defaultConfig, {
     // modify the webpack config however you'd like to by adding to this object
     plugins: [
+      new webpack.DefinePlugin({
+        "process.env.MICROFRONTEND_URLS": JSON.stringify(microfrontendUrls),
+      }),
       new HtmlWebpackPlugin({
         inject: false,
         template: "src/index.ejs",
         templateParameters: {
-          isLocal: webpackConfigEnv && webpackConfigEnv.isLocal,
+          isLocal,
           orgName,
+          microfrontendUrls,
         },
       }),
     ],
