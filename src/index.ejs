@@ -1,179 +1,379 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>CortexBank - Login</title>
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: http: localhost:*; script-src 'unsafe-inline' 'unsafe-eval' https: localhost:*; connect-src 'self' * http: https: localhost:* ws://localhost:* wss:; style-src 'unsafe-inline' https:; object-src 'none';">
-  <meta name="importmap-type" use-injector />
-  
-  <!-- If you wish to turn off import-map-overrides for specific environments (prod), uncomment the line below -->
-  <!-- More info at https://github.com/single-spa/import-map-overrides/blob/main/docs/configuration.md#domain-list -->
-  <!-- <meta name="import-map-overrides-domains" content="denylist:prod.example.com" /> -->
+  <head>
+    <meta charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CortexBank - Login</title>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self' https: http: localhost:*; script-src 'unsafe-inline' 'unsafe-eval' https: localhost:*; connect-src 'self' * http: https: localhost:* ws://localhost:* wss:; style-src 'unsafe-inline' https:; object-src 'none';"
+    >
+    <meta name="importmap-type" use-injector />
 
-  <!-- Shared dependencies go into this import map -->
-  <script type="injector-importmap">
-    {
-      "imports": {
-        "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@6.0.3/lib/es2015/esm/single-spa.min.js"
+    <!-- If you wish to turn off import-map-overrides for specific environments (prod), uncomment the line below -->
+    <!-- More info at https://github.com/single-spa/import-map-overrides/blob/main/docs/configuration.md#domain-list -->
+    <!-- <meta name="import-map-overrides-domains" content="denylist:prod.example.com" /> -->
+
+    <!-- Shared dependencies go into this import map -->
+    <script type="injector-importmap">
+      {
+        "imports": {
+          "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@6.0.3/lib/es2015/esm/single-spa.min.js"
+        }
       }
-    }
-  </script>
-  <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/single-spa@6.0.3/lib/es2015/esm/single-spa.min.js">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <style>
-    /* Layout com sidebar à esquerda e conteúdo à direita */
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      overflow: hidden;
-      font-family: 'Roboto', sans-serif;
-    }
-    
-    /* Header com logo CortexBank */
-    .cortex-header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1001;
-      background-color: #ffffff;
-      border-bottom: 1px solid #e0e0e0;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    }
-    
-    .cortex-header-bar {
-      height: 1px;
-      background-color: #e0e0e0;
-    }
-    
-    .cortex-header-content {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      padding: 12px 24px;
-      height: 48px;
-      background-color: #ffffff;
-      box-sizing: border-box;
-    }
-    
-    .cortex-logo {
-      font-size: 24px;
-      font-weight: 700;
-      color: #1c6ea4;
-      letter-spacing: -0.5px;
-      margin: 0;
-      text-align: left;
-      font-family: 'Roboto', sans-serif;
-    }
-    
-    main {
-      margin-left: 280px;
-      margin-top: 50px;
-      height: calc(100vh - 50px);
-      overflow-y: auto;
-      overflow-x: hidden;
-      background-color: #f0f2f5;
-      box-sizing: border-box;
-    }
-    
-    /* Ocultar header na rota de auth */
-    body[data-route="/auth"] .cortex-header {
-      display: none;
-    }
-    
-    body[data-route="/auth"] main {
-      margin-left: 0;
-      margin-top: 0;
-      height: 100vh;
-    }
-    
-    /* Ajuste para mobile */
-    @media (max-width: 768px) {
+    </script>
+    <link
+      rel="modulepreload"
+      href="https://cdn.jsdelivr.net/npm/single-spa@6.0.3/lib/es2015/esm/single-spa.min.js"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Layout com sidebar à esquerda e conteúdo à direita */
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+        font-family: "Roboto", sans-serif;
+      }
+
+      /* Header com logo CortexBank */
       .cortex-header {
-        position: relative;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1001;
+        background-color: #ffffff;
+        border-bottom: 1px solid #e0e0e0;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        transition: left var(--transition-default, 0.3s ease);
       }
-      
+
+      .cortex-header-bar {
+        height: 1px;
+        background-color: #e0e0e0;
+      }
+
+      .cortex-header-content {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 12px 24px;
+        height: 48px;
+        background-color: #ffffff;
+        box-sizing: border-box;
+      }
+
+      .cortex-logo {
+        font-size: 24px;
+        font-weight: 700;
+        color: #1c6ea4;
+        letter-spacing: -0.5px;
+        margin: 0;
+        text-align: left;
+        font-family: "Roboto", sans-serif;
+      }
+
       main {
+        margin-left: 280px;
+        margin-top: 50px;
+        height: calc(100vh - 50px);
+        overflow-y: auto;
+        overflow-x: hidden;
+        background-color: #f0f2f5;
+        box-sizing: border-box;
+        transition: margin-left var(--transition-default, 0.3s ease);
+      }
+
+      /* Ocultar header na rota de auth */
+      body[data-route="/auth"] .cortex-header {
+        display: none;
+      }
+
+      body[data-route="/auth"] main {
         margin-left: 0;
         margin-top: 0;
-        min-height: 100vh;
+        height: 100vh;
       }
-    }
-  </style>
 
-  <% if (isLocal) { %>
-  <script type="injector-importmap">
-    {
-      "imports": {
-        "@cortex-bank/root-config": "//localhost:3000/cortex-bank-root-config.js",
-        "@cortex-bank/navigation-drawer": "//localhost:3001/cortex-bank-navigation-drawer.js",
-        "@cortex-bank/dashboard": "//localhost:3002/cortex-bank-dashboard.js",
-        "@cortex-bank/transactions": "//localhost:3003/cortex-bank-transactions.js",
-        "@cortex-bank/statement": "//localhost:3004/cortex-bank-statement.js",
-        "@cortex-bank/auth": "//localhost:3005/cortex-bank-auth.js",
-        "react": "https://esm.sh/react@19.2.0?dev",
-        "react-dom": "https://esm.sh/react-dom@19.2.0?dev",
-        "react-dom/client": "https://esm.sh/react-dom@19.2.0/client?dev"
+      /* Botão hambúrguer no header - apenas em mobile */
+      .hamburger-button {
+        display: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #1c6ea4;
+        padding: 8px;
+        border-radius: 4px;
+        margin-right: 16px;
+        transition: background-color 0.2s ease;
       }
-    }
-  </script>
-  <% } else { %>
-  <script type="injector-importmap">
-    {
-      "imports": {
-        "@cortex-bank/root-config": "<%= microfrontendUrls.rootConfig %>/cortex-bank-root-config.js",
-        "@cortex-bank/navigation-drawer": "<%= microfrontendUrls.navigationDrawer %>/cortex-bank-navigation-drawer.js",
-        "@cortex-bank/dashboard": "<%= microfrontendUrls.dashboard %>/cortex-bank-dashboard.js",
-        "@cortex-bank/transactions": "<%= microfrontendUrls.transactions %>/cortex-bank-transactions.js",
-        "@cortex-bank/statement": "<%= microfrontendUrls.statement %>/cortex-bank-statement.js",
-        "@cortex-bank/auth": "<%= microfrontendUrls.auth %>/cortex-bank-auth.js",
-        "react": "https://esm.sh/react@19.2.0?dev",
-        "react-dom": "https://esm.sh/react-dom@19.2.0?dev",
-        "react-dom/client": "https://esm.sh/react-dom@19.2.0/client?dev"
-      }
-    }
-  </script>
-  <% } %>
 
-  <script src="https://cdn.jsdelivr.net/npm/import-map-overrides@5.1.1/dist/import-map-overrides.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@single-spa/import-map-injector@2.0.1/lib/import-map-injector.js"></script>
-</head>
-<body>
-  <noscript>
-    You need to enable JavaScript to run this app.
-  </noscript>
-  <header class="cortex-header">
-    <div class="cortex-header-bar"></div>
-    <div class="cortex-header-content">
-      <h1 class="cortex-logo">CortexBank</h1>
-    </div>
-    <div class="cortex-header-bar"></div>
-  </header>
-  <main></main>
-  <script>
-    // Atualiza o atributo data-route no body baseado na rota atual
-    function updateRouteAttribute() {
-      const pathname = window.location.pathname;
-      document.body.setAttribute('data-route', pathname);
-    }
-    
-    // Atualiza quando a página carrega
-    updateRouteAttribute();
-    
-    // Atualiza quando a rota muda (popstate para navegação do browser)
-    window.addEventListener('popstate', updateRouteAttribute);
-    
-    // Observa mudanças na rota via single-spa
-    window.addEventListener('single-spa:routing-event', updateRouteAttribute);
-    
-    window.importMapInjector.initPromise.then(() => {
-      import('@cortex-bank/root-config');
-    });
-  </script>
-  <import-map-overrides-full show-when-local-storage="devtools" dev-libs></import-map-overrides-full>
-</body>
+      .hamburger-button:hover {
+        background-color: rgba(28, 110, 164, 0.1);
+      }
+
+      .hamburger-button svg {
+        width: 24px;
+        height: 24px;
+      }
+
+      /* Ajuste para mobile */
+      @media (max-width: 768px) {
+        .cortex-header {
+          position: fixed;
+          left: 0;
+          right: 0;
+        }
+
+        .hamburger-button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .cortex-header-content {
+          padding: 12px 16px;
+        }
+
+        main {
+          margin-left: 0;
+          margin-top: 50px;
+          min-height: calc(100vh - 50px);
+        }
+
+        /* Quando sidebar está aberta, mover header para a direita */
+        body.sidebar-open .cortex-header {
+          left: 280px;
+          width: calc(100% - 280px);
+        }
+
+        body.sidebar-open main {
+          margin-left: 280px;
+        }
+
+        /* Para telas muito pequenas */
+        @media (max-width: 480px) {
+          body.sidebar-open .cortex-header {
+            left: 100%;
+            width: 0;
+            overflow: hidden;
+          }
+
+          body.sidebar-open main {
+            margin-left: 100%;
+          }
+        }
+      }
+
+      /* Prevenir scroll quando sidebar está aberta em mobile */
+      body.sidebar-open {
+        overflow: hidden;
+      }
+
+      /* Overlay para mobile - AGRORA COM Z-INDEX CORRETO */
+      .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 998; /* MENOR que o sidebar (1000) */
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .sidebar-overlay.active {
+        display: block;
+        opacity: 1;
+      }
+
+      @media (max-width: 768px) {
+        .sidebar-overlay {
+          display: block;
+        }
+      }
+    </style>
+
+    <% if (isLocal) { %>
+    <script type="injector-importmap">
+      {
+        "imports": {
+          "@cortex-bank/root-config": "//localhost:3000/cortex-bank-root-config.js",
+          "@cortex-bank/navigation-drawer": "//localhost:3001/cortex-bank-navigation-drawer.js",
+          "@cortex-bank/dashboard": "//localhost:3002/cortex-bank-dashboard.js",
+          "@cortex-bank/transactions": "//localhost:3003/cortex-bank-transactions.js",
+          "@cortex-bank/statement": "//localhost:3004/cortex-bank-statement.js",
+          "@cortex-bank/auth": "//localhost:3005/cortex-bank-auth.js",
+          "react": "https://esm.sh/react@19.2.0?dev",
+          "react-dom": "https://esm.sh/react-dom@19.2.0?dev",
+          "react-dom/client": "https://esm.sh/react-dom@19.2.0/client?dev"
+        }
+      }
+    </script>
+    <% } else { %>
+    <script type="injector-importmap">
+      {
+        "imports": {
+          "@cortex-bank/root-config": "<%= microfrontendUrls.rootConfig %>/cortex-bank-root-config.js",
+          "@cortex-bank/navigation-drawer": "<%= microfrontendUrls.navigationDrawer %>/cortex-bank-navigation-drawer.js",
+          "@cortex-bank/dashboard": "<%= microfrontendUrls.dashboard %>/cortex-bank-dashboard.js",
+          "@cortex-bank/transactions": "<%= microfrontendUrls.transactions %>/cortex-bank-transactions.js",
+          "@cortex-bank/statement": "<%= microfrontendUrls.statement %>/cortex-bank-statement.js",
+          "@cortex-bank/auth": "<%= microfrontendUrls.auth %>/cortex-bank-auth.js",
+          "react": "https://esm.sh/react@19.2.0?dev",
+          "react-dom": "https://esm.sh/react-dom@19.2.0?dev",
+          "react-dom/client": "https://esm.sh/react-dom@19.2.0/client?dev"
+        }
+      }
+    </script>
+    <% } %>
+
+    <script src="https://cdn.jsdelivr.net/npm/import-map-overrides@5.1.1/dist/import-map-overrides.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@single-spa/import-map-injector@2.0.1/lib/import-map-injector.js"></script>
+  </head>
+
+  <body>
+    <noscript> You need to enable JavaScript to run this app. </noscript>
+
+    <!-- Overlay para fechar sidebar no mobile - AGORA COM display: none por padrão -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <header class="cortex-header">
+      <div class="cortex-header-bar"></div>
+      <div class="cortex-header-content">
+        <!-- Botão hambúrguer - apenas em mobile -->
+        <button
+          class="hamburger-button"
+          id="hamburgerButton"
+          aria-label="Abrir menu"
+        >
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </button>
+        <h1 class="cortex-logo">CortexBank</h1>
+      </div>
+      <div class="cortex-header-bar"></div>
+    </header>
+    <main></main>
+
+    <script>
+      // Controle do menu mobile
+      let isSidebarOpen = false;
+
+      function toggleSidebar() {
+        isSidebarOpen = !isSidebarOpen;
+        const body = document.body;
+        const overlay = document.getElementById("sidebarOverlay");
+        
+        if (isSidebarOpen) {
+          body.classList.add("sidebar-open");
+          overlay.classList.add("active");
+        } else {
+          body.classList.remove("sidebar-open");
+          overlay.classList.remove("active");
+        }
+
+        // Disparar evento para os microfrontends
+        window.dispatchEvent(
+          new CustomEvent("sidebar-toggle", {
+            detail: { isOpen: isSidebarOpen },
+          })
+        );
+      }
+
+      function closeSidebar() {
+        if (isSidebarOpen) {
+          isSidebarOpen = false;
+          const body = document.body;
+          const overlay = document.getElementById("sidebarOverlay");
+          
+          body.classList.remove("sidebar-open");
+          overlay.classList.remove("active");
+          
+          // Disparar evento para os microfrontends
+          window.dispatchEvent(
+            new CustomEvent("sidebar-toggle", {
+              detail: { isOpen: false },
+            })
+          );
+        }
+      }
+
+      // Inicializar controles
+      document.addEventListener("DOMContentLoaded", function () {
+        const hamburgerButton = document.getElementById("hamburgerButton");
+        const overlay = document.getElementById("sidebarOverlay");
+
+        hamburgerButton.addEventListener("click", toggleSidebar);
+        overlay.addEventListener("click", closeSidebar);
+
+        // Fechar sidebar ao redimensionar para desktop
+        window.addEventListener("resize", function () {
+          if (window.innerWidth > 768 && isSidebarOpen) {
+            closeSidebar();
+          }
+        });
+
+        // Ouvir evento para fechar sidebar vindo dos microfrontends
+        window.addEventListener('sidebar-close', closeSidebar);
+
+        // Fechar sidebar quando navegar (captura eventos do single-spa)
+        window.addEventListener('single-spa:routing-event', function() {
+          if (isSidebarOpen) {
+            // Pequeno delay para garantir que a navegação aconteceu
+            setTimeout(closeSidebar, 100);
+          }
+        });
+
+        // Fechar sidebar quando usar botões de navegação do browser
+        window.addEventListener('popstate', function() {
+          if (isSidebarOpen) {
+            setTimeout(closeSidebar, 100);
+          }
+        });
+      });
+
+      // Atualiza o atributo data-route no body baseado na rota atual
+      function updateRouteAttribute() {
+        const pathname = window.location.pathname;
+        document.body.setAttribute("data-route", pathname);
+        
+        // Fechar sidebar quando a rota mudar
+        if (isSidebarOpen && pathname !== '/auth') {
+          setTimeout(closeSidebar, 100);
+        }
+      }
+
+      // Atualiza quando a página carrega
+      updateRouteAttribute();
+
+      // Atualiza quando a rota muda (popstate para navegação do browser)
+      window.addEventListener("popstate", updateRouteAttribute);
+
+      // Observa mudanças na rota via single-spa
+      window.addEventListener("single-spa:routing-event", updateRouteAttribute);
+
+      window.importMapInjector.initPromise.then(() => {
+        import("@cortex-bank/root-config");
+      });
+    </script>
+    <import-map-overrides-full
+      show-when-local-storage="devtools"
+      dev-libs
+    ></import-map-overrides-full>
+  </body>
 </html>
