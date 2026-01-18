@@ -8,8 +8,10 @@
 4. [Requisitos do Sistema](#requisitos-do-sistema)
 5. [Instalação e Execução](#instalação-e-execução)
 6. [Arquitetura Técnica](#arquitetura-técnica)
-7. [Documentação Detalhada](#documentação-detalhada)
-8. [Comandos Úteis](#comandos-úteis)
+7. [Infraestrutura e Deploy](#infraestrutura-e-deploy)
+8. [Segurança](#segurança)
+9. [Documentação Detalhada](#documentação-detalhada)
+10. [Comandos Úteis](#comandos-úteis)
 
 ---
 
@@ -275,6 +277,61 @@ O `docker-compose.yml` orquestra:
 
 ---
 
+## Infraestrutura e Deploy
+
+O projeto **Cortex Bank** utiliza uma arquitetura distribuída com separação clara entre frontend e backend, garantindo escalabilidade, segurança e manutenibilidade.
+
+### Resumo da Arquitetura
+
+- **Frontend (Vercel)**: Todos os microfrontends hospedados na Vercel com CDN global, SSL/TLS automático e deploy automático via CI/CD
+- **Backend (Coolify/Hostinger)**: API REST hospedada no Coolify via Hostinger, com containerização Docker e monitoramento de recursos
+- **Banco de Dados (MongoDB Cloud)**: MongoDB Atlas com alta disponibilidade, backups automáticos e segurança robusta
+- **CI/CD**: Deploy automático na branch `main` via integração GitHub → Vercel/Coolify
+- **Variáveis de Ambiente**: Gerenciadas de forma segura nas respectivas plataformas (Vercel para frontend, Coolify para backend)
+
+**⚠️ Importante sobre Variáveis de Ambiente:**
+
+- **Desenvolvimento Local**: Utiliza arquivo `.env` local (não versionado no Git)
+- **Produção**: Variáveis gerenciadas exclusivamente nos painéis da Vercel (frontend) e Coolify (backend)
+- **Segurança**: Nenhuma credencial ou informação sensível é versionada no código-fonte
+
+📖 **[Documentação Completa de Infraestrutura e Deploy](./docs/infrastructure_deploy.md)** - Detalhes completos sobre hospedagem, CI/CD, variáveis de ambiente e diagrama de arquitetura.
+
+---
+
+## Segurança
+
+A segurança é uma preocupação fundamental em todas as camadas da arquitetura do **Cortex Bank**.
+
+### Resumo das Medidas de Segurança
+
+**Frontend:**
+- Headers de segurança HTTP (CSP, XSS Protection, Frame Options)
+- CORS configurado e restrito
+- Variáveis de ambiente gerenciadas na Vercel
+- HTTPS obrigatório
+
+**Backend:**
+- Variáveis de ambiente no Coolify (criptografadas)
+- Autenticação JWT com tokens seguros
+- Validação de inputs
+- Health check endpoint para monitoramento básico
+
+**Banco de Dados:**
+- Network Access Control (apenas IPs autorizados)
+- Criptografia em trânsito e em repouso
+- Usuários com permissões limitadas
+- Backups automáticos e seguros
+
+**Comunicação:**
+- HTTPS/TLS em todas as camadas
+- Validação de certificados
+- Tokens JWT transmitidos de forma segura
+
+🔒 **[Documentação Completa de Segurança](./docs/security.md)** - Detalhes completos sobre todas as medidas de segurança implementadas, checklist e boas práticas.
+
+---
+
 ## Documentação Detalhada
 
 Para informações mais detalhadas sobre aspectos específicos da arquitetura, consulte os seguintes documentos na pasta `docs/`:
@@ -317,6 +374,29 @@ Documentação técnica linha a linha sobre:
 - Healthchecks
 - Networks
 - Otimizações de performance
+
+### 🏗️ [Infraestrutura e Deploy](./docs/infrastructure_deploy.md)
+
+Documentação completa sobre:
+
+- Arquitetura de infraestrutura (Frontend, Backend, Banco de Dados)
+- Hospedagem na Vercel (frontend) e Coolify/Hostinger (backend)
+- CI/CD e deploy automático na branch `main`
+- Gerenciamento de variáveis de ambiente
+- MongoDB Cloud
+- Diagrama de infraestrutura
+
+### 🔒 [Segurança](./docs/security.md)
+
+Documentação completa sobre:
+
+- Segurança no frontend (headers HTTP, CORS, variáveis)
+- Segurança no backend (autenticação, validação, rate limiting)
+- Segurança no banco de dados (network access, criptografia)
+- Segurança na comunicação (HTTPS/TLS)
+- Health check e monitoramento básico
+- Boas práticas de segurança
+- Checklist de segurança
 
 ---
 
