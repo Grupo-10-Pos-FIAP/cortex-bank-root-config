@@ -3,15 +3,17 @@
 ## 📋 Sumário
 
 1. [Introdução](#introdução)
-2. [Visão Geral da Arquitetura](#visão-geral-da-arquitetura)
-3. [Estrutura do Projeto](#estrutura-do-projeto)
-4. [Requisitos do Sistema](#requisitos-do-sistema)
-5. [Instalação e Execução](#instalação-e-execução)
-6. [Arquitetura Técnica](#arquitetura-técnica)
-7. [Infraestrutura e Deploy](#infraestrutura-e-deploy)
-8. [Segurança](#segurança)
-9. [Documentação Detalhada](#documentação-detalhada)
-10. [Comandos Úteis](#comandos-úteis)
+2. [Como Testar a Aplicação](#como-testar-a-aplicação)
+3. [Visão Geral da Arquitetura](#visão-geral-da-arquitetura)
+4. [Estrutura do Projeto](#estrutura-do-projeto)
+5. [Requisitos do Sistema](#requisitos-do-sistema)
+6. [Instalação e Execução](#instalação-e-execução)
+7. [Arquitetura Técnica](#arquitetura-técnica)
+8. [Infraestrutura e Deploy](#infraestrutura-e-deploy)
+9. [Segurança](#segurança)
+10. [Testando a Aplicação](#testando-a-aplicação)
+11. [Documentação Detalhada](#documentação-detalhada)
+12. [Comandos Úteis](#comandos-úteis)
 
 ---
 
@@ -20,6 +22,170 @@
 Este projeto apresenta uma implementação completa de **arquitetura de microfrontends** utilizando **Single-SPA** como framework de orquestração. O sistema foi desenvolvido para demonstrar os conceitos de modularidade, independência de deploy, isolamento de domínios e escalabilidade em aplicações web modernas.
 
 A aplicação **Cortex Bank** é composta por múltiplos microfrontends independentes que se comunicam através de **Import Maps**, garantindo total desacoplamento entre os módulos e permitindo evolução tecnológica granular.
+
+---
+
+## Como Testar a Aplicação
+
+### 🌐 Teste Online (Produção)
+
+A aplicação está disponível em produção e pode ser testada diretamente no navegador:
+
+**URL de Produção:** [https://cortex-bank-root-config.vercel.app](https://cortex-bank-root-config.vercel.app)
+
+**Como testar:**
+
+1. Acesse a URL acima no seu navegador
+2. Crie uma conta de usuário através da interface de autenticação
+3. Explore todas as funcionalidades:
+   - Dashboard com visão geral das contas
+   - Criação e gerenciamento de transações
+   - Visualização de extratos bancários
+   - Navegação entre diferentes seções da aplicação
+
+**Vantagens do teste online:**
+
+- ✅ Não requer instalação local
+- ✅ Ambiente de produção estável
+- ✅ Acesso imediato para avaliação
+- ✅ Todas as funcionalidades disponíveis
+
+---
+
+### 🐳 Teste Local com Docker (Recomendado para Desenvolvimento)
+
+Para testar a aplicação localmente usando Docker, siga os passos abaixo:
+
+#### Pré-requisitos
+
+Certifique-se de ter instalado:
+
+- **Docker** (versão 20.10 ou superior)
+- **Docker Compose** (incluso no Docker Desktop)
+
+#### Passo a Passo para Testar Localmente
+
+1. **Clone ou baixe o repositório do root-config**
+
+   ```bash
+   cd root-config
+   ```
+
+2. **Verifique se você tem todos os microfrontends na estrutura correta**
+
+   A estrutura de diretórios deve ser:
+
+   ```
+   projeto/
+   ├── root-config/          # Diretório atual
+   ├── auth/                 # Um nível acima
+   ├── navigation-drawer/    # Um nível acima
+   ├── dashboard/            # Um nível acima
+   ├── transactions/         # Um nível acima
+   ├── bank-statement/       # Um nível acima
+   └── backend/              # Um nível acima
+   ```
+
+3. **Subir toda a aplicação com Docker Compose**
+
+   No diretório `root-config` (onde está o `docker-compose.yml`), execute:
+
+   ```bash
+   docker-compose up --build
+   ```
+
+   **O que este comando faz:**
+
+   - Constrói as imagens Docker de cada microfrontend e do backend
+   - Cria volumes persistentes de `node_modules` para cada serviço
+   - Sobe cada aplicação em sua respectiva porta
+   - Aguarda todos os healthchecks ficarem saudáveis
+   - Sobe o root-config apenas quando todos os microfrontends estiverem prontos
+
+   **Tempo estimado:** 3-5 minutos na primeira execução (build das imagens)
+
+4. **Aguardar inicialização completa**
+
+   Aguarde até ver mensagens indicando que todos os serviços estão rodando. Você verá algo como:
+
+   ```
+   root-config_1  | webpack compiled successfully
+   backend_1      | 🟢 MongoDB conectado
+   backend_1      | Servidor rodando na porta 3000
+   ```
+
+5. **Acessar a aplicação**
+
+   Quando todos os containers estiverem rodando e estáveis:
+
+   👉 **Acesse:** [http://localhost:3000](http://localhost:3000)
+
+   O root-config irá:
+   - Ler o import map local
+   - Carregar os microfrontends das portas configuradas
+   - Montar o layout definido em `microfrontend-layout.html`
+
+   O backend estará disponível em `http://localhost:8080` para receber requisições dos microfrontends.
+
+6. **Criar um usuário e testar**
+
+   - Acesse a interface de autenticação
+   - Crie uma nova conta de usuário
+   - Explore todas as funcionalidades da aplicação
+
+#### Comandos Úteis para Teste Local
+
+**Ver logs em tempo real:**
+
+```bash
+docker-compose logs -f
+```
+
+**Ver logs de um serviço específico:**
+
+```bash
+docker-compose logs -f backend
+docker-compose logs -f root-config
+```
+
+**Parar a aplicação:**
+
+```bash
+docker-compose down
+```
+
+**Parar e limpar volumes (reset completo):**
+
+```bash
+docker-compose down -v
+```
+
+**Reiniciar a aplicação:**
+
+```bash
+docker-compose restart
+```
+
+#### Troubleshooting
+
+**Problema: Porta já em uso**
+
+Se alguma porta estiver em uso, você pode:
+
+1. Parar outros serviços que estejam usando as portas (3000, 3001, 3002, 3003, 3004, 3005, 8080)
+2. Ou modificar as portas no `docker-compose.yml`
+
+**Problema: Containers não iniciam**
+
+1. Verifique se o Docker está rodando
+2. Verifique os logs: `docker-compose logs`
+3. Tente rebuild completo: `docker-compose up --build --force-recreate`
+
+**Problema: Microfrontends não carregam**
+
+1. Verifique se todos os containers estão rodando: `docker-compose ps`
+2. Verifique os logs do root-config: `docker-compose logs root-config`
+3. Verifique o console do navegador para erros
 
 ---
 
@@ -114,6 +280,8 @@ projeto/
 ---
 
 ## Instalação e Execução
+
+> **💡 Dica:** Para testar a aplicação rapidamente, consulte a seção [Como Testar a Aplicação](#como-testar-a-aplicação) acima, que contém instruções detalhadas para teste local e online.
 
 ### Método 1: Docker Compose (Recomendado)
 
@@ -333,6 +501,72 @@ A segurança é uma preocupação fundamental em todas as camadas da arquitetura
 - Tokens JWT transmitidos de forma segura
 
 🔒 **[Documentação Completa de Segurança](./docs/security.md)** - Detalhes completos sobre todas as medidas de segurança implementadas, checklist e boas práticas.
+
+---
+
+## Testando a Aplicação
+
+Esta seção contém informações adicionais sobre endpoints e funcionalidades específicas para testes.
+
+> **📌 Nota:** Para instruções completas de como testar a aplicação (localmente ou online), consulte a seção [Como Testar a Aplicação](#como-testar-a-aplicação) no início deste documento.
+
+### Endpoint para Marcar Transação como Concluída
+
+O backend disponibiliza um endpoint específico para marcar transações como concluídas, permitindo testar a aplicação com transações em diferentes estados.
+
+**Endpoint:**
+
+```
+PATCH /account/transaction/:id/complete
+```
+
+**Autenticação:**
+
+- Requer token JWT válido no header `Authorization: Bearer <token>`
+
+**Parâmetros:**
+
+- `id` (path parameter): ID da transação a ser marcada como concluída
+
+**Resposta de Sucesso (200):**
+
+```json
+{
+  "message": "Transação marcada como concluída com sucesso",
+  "result": {
+    "id": "...",
+    "status": "Done",
+    ...
+  }
+}
+```
+
+**Exemplo de Uso no Postman:**
+
+1. **Método**: `PATCH`
+2. **URL**: `http://localhost:8080/account/transaction/{transactionId}/complete`
+   - Substitua `{transactionId}` pelo ID real da transação
+3. **Headers**:
+   - `Authorization: Bearer <seu-token-jwt>`
+   - `Content-Type: application/json`
+4. **Body**: Não é necessário enviar body para este endpoint
+
+**Exemplo com cURL:**
+
+```bash
+curl -X PATCH \
+  http://localhost:8080/account/transaction/507f1f77bcf86cd799439011/complete \
+  -H "Authorization: Bearer seu-token-jwt" \
+  -H "Content-Type: application/json"
+```
+
+**Nota:** Este endpoint é útil para testes, permitindo simular transações concluídas sem precisar criar novas transações já com status "Done". Isso facilita o teste de funcionalidades que dependem do estado das transações na aplicação.
+
+**Documentação da API:**
+
+A documentação completa da API, incluindo este e outros endpoints, está disponível através do Swagger em:
+- **Local**: `http://localhost:8080/docs`
+- **Produção**: `https://seu-backend-producao.com/docs`
 
 ---
 
