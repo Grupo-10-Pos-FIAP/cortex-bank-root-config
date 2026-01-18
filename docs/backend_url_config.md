@@ -9,26 +9,31 @@ Cada microfrontend precisa conhecer a URL do backend de produção para fazer re
 ## 🔍 Variáveis de Ambiente por Módulo
 
 ### Auth (`@auth/`)
+
 - **Variável**: `REACT_APP_API_URL`
 - **Padrão (desenvolvimento)**: `http://localhost:3000`
 - **Uso**: Autenticação e registro de usuários
 
 ### Dashboard (`@dashboard/`)
+
 - **Variável**: `API_BASE_URL`
 - **Padrão (desenvolvimento)**: `http://localhost:8080`
 - **Uso**: Dados do dashboard e widgets
 
 ### Navigation Drawer (`@navigation-drawer/`)
+
 - **Variável**: `API_BASE_URL`
 - **Padrão (desenvolvimento)**: `http://localhost:8080`
 - **Uso**: Informações da conta e navegação
 
 ### Statement (`@statement/`)
+
 - **Variável**: `API_BASE_URL`
 - **Padrão (desenvolvimento)**: `http://localhost:8080`
 - **Uso**: Extrato de transações
 
 ### Transactions (`@transactions/`)
+
 - **Variável**: `API_BASE_URL`
 - **Padrão (desenvolvimento)**: `http://localhost:8080`
 - **Uso**: Gerenciamento de transações
@@ -46,17 +51,20 @@ Cada microfrontend precisa conhecer a URL do backend de produção para fazer re
 Para cada microfrontend, adicione a variável correspondente:
 
 #### Para o módulo Auth:
+
 ```
 REACT_APP_API_URL=https://seu-backend-producao.com
 REACT_APP_REDIRECT_URL=https://seu-root-config.vercel.app/dashboard
 ```
 
 #### Para os módulos Dashboard, Navigation Drawer, Statement e Transactions:
+
 ```
 API_BASE_URL=https://seu-backend-producao.com
 ```
 
 **Importante:**
+
 - Substitua `https://seu-backend-producao.com` pela URL real do seu backend em produção
 - Se o backend estiver no Coolify, use a URL fornecida pelo Coolify
 - Se o backend estiver em outro serviço, use a URL completa (ex: `https://api.cortex-bank.com`)
@@ -87,12 +95,14 @@ Após adicionar as variáveis:
 Se seu backend está deployado no Coolify na URL `https://backend.cortex-bank.com`:
 
 #### Auth:
+
 ```
 REACT_APP_API_URL=https://backend.cortex-bank.com
 REACT_APP_REDIRECT_URL=https://cortex-bank-root-config.vercel.app/dashboard
 ```
 
 #### Dashboard, Navigation Drawer, Statement, Transactions:
+
 ```
 API_BASE_URL=https://backend.cortex-bank.com
 ```
@@ -102,12 +112,14 @@ API_BASE_URL=https://backend.cortex-bank.com
 Se seu backend está em `https://api.cortex-bank.com`:
 
 #### Auth:
+
 ```
 REACT_APP_API_URL=https://api.cortex-bank.com
 REACT_APP_REDIRECT_URL=https://cortex-bank-root-config.vercel.app/dashboard
 ```
 
 #### Dashboard, Navigation Drawer, Statement, Transactions:
+
 ```
 API_BASE_URL=https://api.cortex-bank.com
 ```
@@ -146,6 +158,7 @@ const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:8080";
 ### Problema: Requisições ainda vão para localhost
 
 **Solução:**
+
 1. Verifique se a variável de ambiente foi adicionada corretamente
 2. Verifique se selecionou o ambiente correto (Production)
 3. Faça um novo deploy após adicionar a variável
@@ -154,12 +167,14 @@ const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:8080";
 ### Problema: CORS Error
 
 **Solução:**
+
 1. Configure CORS no backend para aceitar requisições do domínio da Vercel
 2. Adicione a URL do frontend (ex: `https://cortex-bank-auth.vercel.app`) nas origens permitidas do backend
 
 ### Problema: Variável não está disponível no build
 
 **Solução:**
+
 1. Verifique se a variável está com o nome exato (case-sensitive)
 2. Verifique se selecionou o ambiente correto
 3. As variáveis precisam começar com `REACT_APP_` para o módulo auth, ou `API_BASE_URL` para os outros

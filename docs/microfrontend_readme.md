@@ -27,18 +27,23 @@ Cada microfrontend roda em uma porta distinta, se comunica somente via Import Ma
 O **root-config** é o coração da arquitetura. Ele é responsável por:
 
 ### ✔️ 1. Declarar o Import Map
+
 Ele define onde cada microfrontend está hospedado (local ou remoto).
 
 ### ✔️ 2. Carregar e inicializar os microfrontends
+
 Usa o layout HTML (`microfrontend-layout.html`) para encaixar cada aplicação em seu respectivo slot.
 
 ### ✔️ 3. Gerenciar navegação e roteamento compartilhado
+
 O arquivo `microfrontend-layout.html` direciona qual MFE será exibido em cada rota.
 
 ### ✔️ 4. Centralizar dependências compartilhadas via CDN
+
 React, React DOM e Single-SPA são servidos via CDN, reduzindo bundle size dos MFEs.
 
 ### ✔️ 5. Controlar ambientes
+
 O `index.ejs` injeta import maps diferentes quando o parâmetro `isLocal` está ativo, permitindo rodar tudo no Docker ou localmente.
 
 ---
@@ -71,6 +76,7 @@ O layout HTML define onde cada microfrontend deve ser renderizado:
 ```
 
 Esse arquivo controla exatamente:
+
 - onde o navigation drawer aparece
 - qual aplicação é carregada por padrão
 - qual rota aciona qual microfrontend
@@ -82,6 +88,7 @@ Sem esse arquivo, o root-config não teria conhecimento da estrutura visual.
 ## 🔌 Execução em Desenvolvimento
 
 Cada microfrontend sobe sua própria instância Webpack Dev Server:
+
 - Root: porta 3000
 - Navigation Drawer: porta 3001
 - Dashboard: porta 3002
@@ -97,6 +104,7 @@ Quando todos estão de pé, o root-config injeta os módulos do import map e ini
 Cada MFE possui seu Dockerfile e é construído isoladamente.
 
 O docker-compose orquestra a subida simultânea de todos, garantindo:
+
 - volumes independentes de node_modules
 - mount dos diretórios `src`/`public`
 - healthchecks robustos
@@ -119,6 +127,7 @@ Os microfrontends fazem requisições HTTP para `http://localhost:8080` para ace
 ## 📦 Independência Total Entre Microfrontends
 
 Cada microfrontend possui:
+
 - seu próprio Webpack
 - seu próprio package.json
 - seu próprio ciclo de build
@@ -128,6 +137,7 @@ Cada microfrontend possui:
 Os MFEs **não compartilham código diretamente** — apenas via CDN através de import maps.
 
 Isso garante:
+
 - Deploy independente
 - Falhas isoladas
 - Evolução tecnológica granular
@@ -160,6 +170,7 @@ Isso garante:
 ## 📌 Conclusão
 
 A abordagem adotada entrega:
+
 - Arquitetura escalável
 - Deploy independente
 - Manutenção modular
@@ -180,4 +191,3 @@ Todos os componentes estão disponíveis em repositórios GitHub separados:
 - **Statement**: [cortex-bank-statement](https://github.com/Grupo-10-Pos-FIAP/cortex-bank-statement)
 - **Backend**: [cortex-bank-backend](https://github.com/Grupo-10-Pos-FIAP/cortex-bank-backend)
 - **Design System**: [Design-System](https://github.com/Grupo-10-Pos-FIAP/Design-System)
-

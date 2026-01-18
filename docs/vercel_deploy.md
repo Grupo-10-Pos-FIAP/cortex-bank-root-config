@@ -12,14 +12,14 @@ Este guia explica como configurar o deploy automático de todos os microfrontend
 
 Os seguintes microfrontends precisam ser deployados:
 
-| Microfrontend | Repositório | URL Vercel (exemplo) |
-|---------------|-------------|----------------------|
-| root-config | cortex-bank-root-config | `https://cortex-bank-root-config.vercel.app` |
-| auth | cortex-bank-auth | `https://cortex-bank-auth.vercel.app` |
+| Microfrontend     | Repositório                   | URL Vercel (exemplo)                               |
+| ----------------- | ----------------------------- | -------------------------------------------------- |
+| root-config       | cortex-bank-root-config       | `https://cortex-bank-root-config.vercel.app`       |
+| auth              | cortex-bank-auth              | `https://cortex-bank-auth.vercel.app`              |
 | navigation-drawer | cortex-bank-navigation-drawer | `https://cortex-bank-navigation-drawer.vercel.app` |
-| dashboard | cortex-bank-dashboard | `https://cortex-bank-dashboard.vercel.app` |
-| transactions | cortex-bank-transactions | `https://cortex-bank-transactions.vercel.app` |
-| statement | cortex-bank-statement | `https://cortex-bank-statement.vercel.app` |
+| dashboard         | cortex-bank-dashboard         | `https://cortex-bank-dashboard.vercel.app`         |
+| transactions      | cortex-bank-transactions      | `https://cortex-bank-transactions.vercel.app`      |
+| statement         | cortex-bank-statement         | `https://cortex-bank-statement.vercel.app`         |
 
 ## 🚀 Passo a Passo do Deploy
 
@@ -57,11 +57,13 @@ MF_URL_AUTH=https://cortex-bank-auth.vercel.app
 **Como adicionar variáveis de ambiente:**
 
 **Na Vercel:**
+
 1. No dashboard da Vercel, vá em **Settings** → **Environment Variables**
 2. Adicione cada variável acima (substitua pelas suas URLs reais de produção)
 3. Selecione os ambientes: **Production**, **Preview**, e **Development**
 
 **Em outras plataformas (Netlify, AWS, etc.):**
+
 - Configure as mesmas variáveis `MF_URL_*` no painel de variáveis de ambiente da plataforma
 
 🔒 **Segurança:** URLs não devem ser hardcoded no código. Sempre use variáveis de ambiente para facilitar mudanças e evitar exposição de informações sensíveis.
@@ -73,12 +75,14 @@ MF_URL_AUTH=https://cortex-bank-auth.vercel.app
 Cada microfrontend precisa conhecer a URL do backend de produção. Configure as seguintes variáveis:
 
 **Para o módulo Auth:**
+
 ```
 REACT_APP_API_URL=https://seu-backend-producao.com
 REACT_APP_REDIRECT_URL=https://cortex-bank-root-config.vercel.app/dashboard
 ```
 
 **Para os módulos Dashboard, Navigation Drawer, Statement e Transactions:**
+
 ```
 API_BASE_URL=https://seu-backend-producao.com
 ```
@@ -166,6 +170,7 @@ Arquivo que exclui arquivos desnecessários do deploy:
 ### Problema: Arquivo JS não encontrado (404)
 
 **Solução:**
+
 1. Verifique se o build foi bem-sucedido
 2. Verifique se o arquivo está em `dist/`
 3. Verifique o nome do arquivo no `package.json` (campo `name`)
@@ -173,12 +178,14 @@ Arquivo que exclui arquivos desnecessários do deploy:
 ### Problema: CORS Error
 
 **Solução:**
+
 1. Verifique se os headers CORS estão configurados no `vercel.json`
 2. Verifique se a URL está correta no import map do root-config
 
 ### Problema: Import Map não funciona
 
 **Solução:**
+
 1. Verifique se todas as URLs dos microfrontends estão corretas
 2. Verifique se as variáveis de ambiente estão configuradas no root-config
 3. Verifique o console do navegador para erros de carregamento
@@ -186,8 +193,9 @@ Arquivo que exclui arquivos desnecessários do deploy:
 ### Problema: Build falha
 
 **Solução:**
+
 1. Verifique os logs de build na Vercel
-2. Teste o build localmente: `npm run build`
+2. Execute o build localmente: `npm run build`
 3. Verifique se todas as dependências estão no `package.json`
 
 ## 🔗 URLs de Produção
@@ -213,7 +221,6 @@ Após o deploy, atualize as URLs no `root-config` se necessário:
 - [ ] Headers de segurança verificados
 - [ ] CORS configurado corretamente
 - [ ] Import maps atualizados com URLs corretas
-- [ ] Teste de integração entre microfrontends
 - [ ] Domínios customizados configurados (opcional)
 
 ---

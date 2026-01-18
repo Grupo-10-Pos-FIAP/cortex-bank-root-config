@@ -27,15 +27,15 @@ A aplicação **Cortex Bank** é composta por múltiplos microfrontends independ
 
 A arquitetura do projeto está dividida nos seguintes componentes:
 
-| Componente | Porta | Descrição |
-|------------|-------|-----------|
-| **root-config** | 3000 | Orquestrador principal que gerencia o carregamento e inicialização dos microfrontends |
-| **navigation-drawer** | 3001 | Microfrontend responsável pelo menu lateral de navegação |
-| **dashboard** | 3002 | Microfrontend do painel principal |
-| **transactions** | 3003 | Microfrontend de transações bancárias |
-| **statement** | 3004 | Microfrontend de extrato bancário |
-| **auth** | 3005 | Microfrontend de autenticação |
-| **backend** | 8080 | API REST em Node.js com Express e MongoDB |
+| Componente            | Porta | Descrição                                                                             |
+| --------------------- | ----- | ------------------------------------------------------------------------------------- |
+| **root-config**       | 3000  | Orquestrador principal que gerencia o carregamento e inicialização dos microfrontends |
+| **navigation-drawer** | 3001  | Microfrontend responsável pelo menu lateral de navegação                              |
+| **dashboard**         | 3002  | Microfrontend do painel principal                                                     |
+| **transactions**      | 3003  | Microfrontend de transações bancárias                                                 |
+| **statement**         | 3004  | Microfrontend de extrato bancário                                                     |
+| **auth**              | 3005  | Microfrontend de autenticação                                                         |
+| **backend**           | 8080  | API REST em Node.js com Express e MongoDB                                             |
 
 Cada microfrontend roda em uma porta distinta e se comunica exclusivamente através de **Import Maps**, conhecendo apenas o root-config — nunca entre si. Essa abordagem garante isolamento completo e independência de deploy.
 
@@ -306,24 +306,28 @@ A segurança é uma preocupação fundamental em todas as camadas da arquitetura
 ### Resumo das Medidas de Segurança
 
 **Frontend:**
+
 - Headers de segurança HTTP (CSP, XSS Protection, Frame Options)
 - CORS configurado e restrito
 - Variáveis de ambiente gerenciadas na Vercel
 - HTTPS obrigatório
 
 **Backend:**
+
 - Variáveis de ambiente no Coolify (criptografadas)
 - Autenticação JWT com tokens seguros
 - Validação de inputs
 - Health check endpoint para monitoramento básico
 
 **Banco de Dados:**
+
 - Network Access Control (apenas IPs autorizados)
 - Criptografia em trânsito e em repouso
 - Usuários com permissões limitadas
 - Backups automáticos e seguros
 
 **Comunicação:**
+
 - HTTPS/TLS em todas as camadas
 - Validação de certificados
 - Tokens JWT transmitidos de forma segura
@@ -404,15 +408,15 @@ Documentação completa sobre:
 
 ### Gerenciamento de Containers
 
-| Tarefa | Comando |
-|--------|---------|
-| Subir todos os serviços | `docker-compose up --build` |
-| Subir em background | `docker-compose up -d --build` |
-| Parar todos os containers | `docker-compose down` |
-| Parar e remover volumes | `docker-compose down -v` |
-| Rebuild completo | `docker-compose up --build --force-recreate` |
-| Ver logs | `docker-compose logs -f` |
-| Ver logs de um serviço específico | `docker-compose logs -f [nome-do-serviço]` |
+| Tarefa                            | Comando                                      |
+| --------------------------------- | -------------------------------------------- |
+| Subir todos os serviços           | `docker-compose up --build`                  |
+| Subir em background               | `docker-compose up -d --build`               |
+| Parar todos os containers         | `docker-compose down`                        |
+| Parar e remover volumes           | `docker-compose down -v`                     |
+| Rebuild completo                  | `docker-compose up --build --force-recreate` |
+| Ver logs                          | `docker-compose logs -f`                     |
+| Ver logs de um serviço específico | `docker-compose logs -f [nome-do-serviço]`   |
 
 ### Limpeza e Manutenção
 

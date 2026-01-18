@@ -3,6 +3,7 @@
 Este guia explica, de forma direta e prática, como qualquer pessoa pode levantar todo o ecossistema de microfrontends localmente utilizando **Docker Compose**.
 
 A arquitetura atual possui:
+
 - **root-config** (porta 3000)
 - **navigation-drawer** (3001)
 - **dashboard** (3002)
@@ -55,6 +56,7 @@ docker-compose up --build
 ```
 
 ### O que esse comando faz:
+
 - **builda** as imagens de cada microfrontend e do backend usando os seus Dockerfiles
 - cria volumes persistentes de `node_modules`
 - sobe cada aplicação em sua respectiva porta
@@ -68,11 +70,13 @@ docker-compose up --build
 Quando todos os containers estiverem verdes e estáveis:
 
 👉 Acesse:
+
 ```
 http://localhost:3000
 ```
 
 O root-config irá:
+
 - ler o import map local
 - carregar os microfrontends das portas configuradas
 - montar o layout definido em `microfrontend-layout.html`
@@ -84,6 +88,7 @@ O backend estará disponível em `http://localhost:8080` para receber requisiç�
 ## 🔄 3. Atualizações em tempo real
 
 Graças aos volumes mapeados:
+
 - qualquer alteração nos arquivos **src/** dos microfrontends é refletida em tempo real
 - webpack-dev-server dentro do container recarrega automaticamente
 
@@ -129,11 +134,11 @@ Isso ajuda bastante em ambientes de desenvolvimento.
 
 ## 📌 Resumo operacional
 
-| Tarefa | Comando |
-|-------|---------|
-| Subir tudo | `docker-compose up --build` |
-| Parar | `docker-compose down` |
-| Limpar volumes | `docker-compose down -v` |
+| Tarefa           | Comando                                      |
+| ---------------- | -------------------------------------------- |
+| Subir tudo       | `docker-compose up --build`                  |
+| Parar            | `docker-compose down`                        |
+| Limpar volumes   | `docker-compose down -v`                     |
 | Rebuild completo | `docker-compose up --build --force-recreate` |
 
 ---
@@ -141,11 +146,10 @@ Isso ajuda bastante em ambientes de desenvolvimento.
 ## 🎯 Conclusão
 
 Em menos de um comando, o desenvolvedor consegue rodar todo o ecossistema localmente. O Docker Compose faz todo o trabalho pesado:
+
 - build das imagens
 - orquestração dos microfrontends e backend
 - healthchecks
 - hot reload via volumes
 
 Essa abordagem garante um ambiente local consistente, escalável e isolado de variações de máquina.
-
-

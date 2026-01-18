@@ -28,7 +28,8 @@ As variáveis de ambiente em produção são gerenciadas exclusivamente através
 
 **Configuração de Variáveis:**
 
-1. **Ambiente de Desenvolvimento Local**: 
+1. **Ambiente de Desenvolvimento Local**:
+
    - Utiliza arquivo `.env` local (não versionado no Git)
    - Arquivo `.env` está incluído no `.gitignore` para prevenir commits acidentais
    - Usado apenas para desenvolvimento local
@@ -66,9 +67,8 @@ O projeto implementa **Continuous Integration e Continuous Deployment (CI/CD)** 
 
 1. **Trigger**: Quando um commit é realizado na branch `main` do repositório GitHub
 2. **Build**: A Vercel detecta automaticamente o push e inicia o processo de build
-3. **Testes**: Execução automática de testes (se configurados)
-4. **Deploy**: Após build bem-sucedido, o deploy é realizado automaticamente
-5. **Notificação**: Status do deploy é reportado no GitHub (via commit status)
+3. **Deploy**: Após build bem-sucedido, o deploy é realizado automaticamente
+4. **Notificação**: Status do deploy é reportado no GitHub (via commit status)
 
 **Vantagens do CI/CD Implementado:**
 

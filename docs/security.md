@@ -13,22 +13,27 @@ Todos os microfrontends implementam headers de segurança HTTP para proteger con
 **Headers Implementados:**
 
 - **X-Content-Type-Options: `nosniff`**
+
   - Previne MIME type sniffing, forçando o navegador a respeitar o Content-Type declarado
   - Protege contra ataques de execução de código malicioso
 
 - **X-Frame-Options: `DENY`**
+
   - Previne que a página seja carregada em frames (iframe, embed, object)
   - Protege contra ataques de clickjacking
 
 - **X-XSS-Protection: `1; mode=block`**
+
   - Ativa a proteção XSS do navegador
   - Bloqueia automaticamente scripts maliciosos detectados
 
 - **Referrer-Policy: `strict-origin-when-cross-origin`**
+
   - Controla quais informações de referrer são enviadas em requisições
   - Protege privacidade e previne vazamento de informações sensíveis
 
 - **Permissions-Policy**
+
   - Restringe acesso a APIs sensíveis (geolocation, microphone, camera)
   - Previne acesso não autorizado a recursos do dispositivo
 
