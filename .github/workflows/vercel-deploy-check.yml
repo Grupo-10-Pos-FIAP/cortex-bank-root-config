@@ -9,19 +9,19 @@ on:
 jobs:
   build-check:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '22'
-      
+          node-version: "22"
+
       - name: Install dependencies
-        run: npm install      
-      
+        run: npm install
+
       - name: Build project
         run: npm run build
         env:
@@ -31,7 +31,7 @@ jobs:
           MF_URL_TRANSACTIONS: ${{ secrets.MF_URL_TRANSACTIONS || 'https://cortex-bank-transactions.vercel.app' }}
           MF_URL_STATEMENT: ${{ secrets.MF_URL_STATEMENT || 'https://cortex-bank-statement.vercel.app' }}
           MF_URL_AUTH: ${{ secrets.MF_URL_AUTH || 'https://cortex-bank-auth.vercel.app' }}
-      
+
       - name: Check build output
         run: |
           if [ ! -d "dist" ]; then

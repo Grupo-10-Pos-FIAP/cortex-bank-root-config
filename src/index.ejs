@@ -316,19 +316,18 @@
 
         window.addEventListener('sidebar-close', closeSidebar);
 
-        window.addEventListener('single-spa:routing-event', function() {
+        // Fecha sidebar em eventos de navegação
+        const handleNavigation = function() {
           if (isSidebarOpen) {
             setTimeout(closeSidebar, 100);
           }
-        });
+        };
 
-        window.addEventListener('popstate', function() {
-          if (isSidebarOpen) {
-            setTimeout(closeSidebar, 100);
-          }
-        });
+        window.addEventListener('single-spa:routing-event', handleNavigation);
+        window.addEventListener('popstate', handleNavigation);
       });
 
+      // Atualiza atributo de rota e fecha sidebar se necessário
       function updateRouteAttribute() {
         const pathname = window.location.pathname;
         document.body.setAttribute("data-route", pathname);
@@ -338,8 +337,10 @@
         }
       }
 
+      // Inicializa atributo de rota
       updateRouteAttribute();
 
+      // Atualiza atributo de rota em eventos de navegação
       window.addEventListener("popstate", updateRouteAttribute);
       window.addEventListener("single-spa:routing-event", updateRouteAttribute);
 
