@@ -15,12 +15,8 @@ module.exports = (webpackConfigEnv, argv) => {
     
   const PORT = 3000;
   const isLocal = webpackConfigEnv && webpackConfigEnv.isLocal;
-  // Detecta ambiente de produção/preview (não local)
-  // Na Vercel, NODE_ENV pode ser 'production' ou não estar definido
-  // Verificamos também se estamos em um ambiente de build (não dev server)
   const isProduction = !isLocal && (process.env.NODE_ENV === 'production' || process.env.VERCEL);
 
-  // URLs dos microfrontends
   const microfrontendUrls = {
     rootConfig: process.env.MF_URL_ROOT_CONFIG || (isLocal ? "//localhost:3000" : ""),
     navigationDrawer: process.env.MF_URL_NAVIGATION_DRAWER || (isLocal ? "//localhost:3001" : ""),
@@ -30,7 +26,6 @@ module.exports = (webpackConfigEnv, argv) => {
     auth: process.env.MF_URL_AUTH || (isLocal ? "//localhost:3005" : ""),
   };
 
-  // Validação: em produção/preview, variáveis de ambiente são obrigatórias
   if (isProduction) {
     const requiredEnvVars = [
       'MF_URL_ROOT_CONFIG',
@@ -55,7 +50,6 @@ module.exports = (webpackConfigEnv, argv) => {
       );
     }
 
-    // Validação adicional: verifica se as URLs não estão vazias
     const emptyUrls = Object.entries(microfrontendUrls)
       .filter(([key, value]) => !value || value.trim() === '')
       .map(([key]) => key);
@@ -71,7 +65,6 @@ module.exports = (webpackConfigEnv, argv) => {
   }
 
   return merge(defaultConfig, {
-    // modify the webpack config however you'd like to by adding to this object
     plugins: [
       new webpack.DefinePlugin({
         "process.env.MICROFRONTEND_URLS": JSON.stringify(microfrontendUrls),
