@@ -560,13 +560,12 @@ curl -X PATCH \
   -H "Content-Type: application/json"
 ```
 
-**Nota:** Este endpoint é útil para testes, permitindo simular transações concluídas sem precisar criar novas transações já com status "Done". Isso facilita o teste de funcionalidades que dependem do estado das transações na aplicação.
+**Nota:** Este endpoint é útil para testes, permitindo simular transações concluídas. Isso facilita o teste de funcionalidades que dependem do estado das transações na aplicação.
 
 **Documentação da API:**
 
 A documentação completa da API, incluindo este e outros endpoints, está disponível através do Swagger em:
 - **Local**: `http://localhost:8080/docs`
-- **Produção**: `https://seu-backend-producao.com/docs`
 
 ---
 
