@@ -4,8 +4,9 @@
   "compilerOptions": {
     "declarationDir": "dist",
     "types": [],
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "emitDeclarationOnly": false
   },
   "include": ["src/**/*"],
-  "exclude": ["src/**/*.test*", "node_modules"]
+  "exclude": ["node_modules"]
 }
