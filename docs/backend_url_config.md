@@ -11,7 +11,7 @@ Cada microfrontend precisa conhecer a URL do backend de produção para fazer re
 ### Auth (`@auth/`)
 
 - **Variável**: `REACT_APP_API_URL`
-- **Padrão (desenvolvimento)**: `http://localhost:3000`
+- **Padrão (desenvolvimento)**: `http://localhost:8080`
 - **Uso**: Autenticação e registro de usuários
 
 ### Dashboard (`@dashboard/`)
@@ -147,7 +147,7 @@ As variáveis são acessadas através de `process.env`:
 
 ```typescript
 // Exemplo no auth
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000";
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
 
 // Exemplo nos outros módulos
 const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:8080";
