@@ -82,7 +82,7 @@ Certifique-se de ter instalado:
    ├── navigation-drawer/    # Um nível acima
    ├── dashboard/            # Um nível acima
    ├── transactions/         # Um nível acima
-   ├── bank-statement/       # Um nível acima
+   ├── statement/            # Um nível acima
    └── backend/              # Um nível acima
    ```
 
@@ -224,7 +224,7 @@ cortex-bank/
 ├── navigation-drawer/     # Microfrontend de navegação
 ├── dashboard/             # Microfrontend do dashboard
 ├── transactions/          # Microfrontend de transações
-├── bank-statement/        # Microfrontend de extrato
+├── statement/        # Microfrontend de extrato
 └── backend/               # API REST backend
 ```
 
@@ -273,7 +273,7 @@ projeto/
 ├── navigation-drawer/    # Um nível acima
 ├── dashboard/            # Um nível acima
 ├── transactions/         # Um nível acima
-├── bank-statement/       # Um nível acima
+├── statement/       # Um nível acima
 └── backend/              # Um nível acima
 ```
 
@@ -336,7 +336,7 @@ cd ../auth && npm install
 cd ../navigation-drawer && npm install
 cd ../dashboard && npm install
 cd ../transactions && npm install
-cd ../bank-statement && npm install
+cd ../statement && npm install
 cd ../backend && npm install
 ```
 
@@ -353,7 +353,7 @@ cd ../dashboard && npm start
 cd ../transactions && npm start
 
 # Terminal 4 - Bank Statement
-cd ../bank-statement && npm start
+cd ../statement && npm start
 
 # Terminal 5 - Backend
 cd ../backend && npm start
