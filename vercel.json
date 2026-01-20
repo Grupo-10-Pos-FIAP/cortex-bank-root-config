@@ -35,7 +35,7 @@
       ]
     },
     {
-      "source": "/(.*\\.js|.*\\.mjs)",
+      "source": "/(.*-[a-f0-9]{8,}\\.js|.*-[a-f0-9]{8,}\\.mjs)",
       "headers": [
         {
           "key": "Content-Type",
@@ -56,11 +56,40 @@
       ]
     },
     {
-      "source": "/(.*\\.html|.*\\.ejs)",
+      "source": "/(.*\\.js|.*\\.mjs)",
       "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/javascript; charset=utf-8"
+        },
         {
           "key": "Cache-Control",
           "value": "public, max-age=0, must-revalidate"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, OPTIONS"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.html|.*\\.ejs|/index\\.html|/)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        },
+        {
+          "key": "Pragma",
+          "value": "no-cache"
+        },
+        {
+          "key": "Expires",
+          "value": "0"
         }
       ]
     }
