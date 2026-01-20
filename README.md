@@ -1,6 +1,6 @@
 # Cortex Bank - Arquitetura de Microfrontends
 
-## 📋 Sumário
+## Sumário
 
 1. [Introdução](#introdução)
 2. [Como Testar a Aplicação](#como-testar-a-aplicação)
@@ -27,7 +27,7 @@ A aplicação **Cortex Bank** é composta por múltiplos microfrontends independ
 
 ## Como Testar a Aplicação
 
-### 🌐 Teste Online (Produção)
+### Teste Online (Produção)
 
 A aplicação está disponível em produção e pode ser testada diretamente no navegador:
 
@@ -52,7 +52,7 @@ A aplicação está disponível em produção e pode ser testada diretamente no 
 
 ---
 
-### 🐳 Teste Local com Docker (Recomendado para Desenvolvimento)
+### Teste Local com Docker (Recomendado para Desenvolvimento)
 
 Para testar a aplicação localmente usando Docker, siga os passos abaixo:
 
@@ -573,7 +573,7 @@ A documentação completa da API, incluindo este e outros endpoints, está dispo
 
 Para informações mais detalhadas sobre aspectos específicos da arquitetura, consulte os seguintes documentos na pasta `docs/`:
 
-### 📘 [Arquitetura de Microfrontends](./docs/microfrontend_readme.md)
+### [Arquitetura de Microfrontends](./docs/microfrontend_readme.md)
 
 Documento completo explicando:
 
@@ -588,7 +588,7 @@ Documento completo explicando:
 - Tecnologias utilizadas
 - Fluxo end-to-end
 
-### 🐳 [Como Subir a Aplicação Localmente](./docs/docker_local_setup.md)
+### [Como Subir a Aplicação Localmente](./docs/docker_local_setup.md)
 
 Guia prático detalhado sobre:
 
@@ -601,7 +601,7 @@ Guia prático detalhado sobre:
 - Limpeza de imagens antigas
 - Tabela resumo de comandos operacionais
 
-### 🔧 [Estrutura Docker Explicada](./docs/docker_explanation.md)
+### [Estrutura Docker Explicada](./docs/docker_explanation.md)
 
 Documentação técnica linha a linha sobre:
 
@@ -612,7 +612,7 @@ Documentação técnica linha a linha sobre:
 - Networks
 - Otimizações de performance
 
-### 🏗️ [Infraestrutura e Deploy](./docs/infrastructure_deploy.md)
+### [Infraestrutura e Deploy](./docs/infrastructure_deploy.md)
 
 Documentação completa sobre:
 
@@ -623,7 +623,7 @@ Documentação completa sobre:
 - MongoDB Cloud
 - Diagrama de infraestrutura
 
-### 🔒 [Segurança](./docs/security.md)
+### [Segurança](./docs/security.md)
 
 Documentação completa sobre:
 
@@ -705,6 +705,13 @@ Para mais detalhes técnicos, consulte a [documentação completa](./docs/) na p
 - [Docker Documentation](https://docs.docker.com/)
 - [Webpack Documentation](https://webpack.js.org/)
 
----
+## Licença
+
+Este projeto foi desenvolvido como parte do trabalho de pós-graduação em Engenharia de Front End.
+
+## Autores
+
+- [Gabrielle Martins](https://github.com/Gabrielle-96)
+- [Helen Cris](https://github.com/HelenCrisM)
 
 **Desenvolvido para fins acadêmicos e de demonstração de arquitetura de microfrontends.**
